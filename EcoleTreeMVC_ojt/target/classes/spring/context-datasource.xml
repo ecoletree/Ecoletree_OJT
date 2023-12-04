@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<beans:bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<beans:property name="driverClassName" value="${jdbc.driverClassName}" />
+		<beans:property name="jdbcUrl" value="${jdbc.url}" />
+		<beans:property name="username" value="${jdbc.username}" />
+		<beans:property name="password" value="${jdbc.password}" />
+
+		<!-- 아래 4개 설정은 예외 케이스를 줄이기 위해 동일하게 설정하도록 함 -->
+		<beans:property name="maximumPoolSize" value="300" /> <!-- 커넥션 풀에 반납할 때 유지될 수 있는 최대 커넥션 수 -->
+		<beans:property name="minimumIdle" value="10" /> <!-- 최수 유지 커넥션 수 -->
+		<beans:property name="idleTimeout" value="60000" /> <!-- 커넥션이 풀에서 유휴 상태로 남을 수 있는 최대 시간 -->
+
+		<beans:property name="autoCommit" value="true" />
+		<beans:property name="readOnly" value="false" />
+
+		<beans:property name="connectionTimeout" value="5000" /> <!-- 커넥션 할당 최대 대기 시간: 5s -->
+<!-- 		<beans:property name="maxLifetime" value="290000" /> 커넥션 갱신 주기: dbms의 타임아웃 값보다 작아야 함. 현재 네이버 서버 wait_timeout: 300s -->
+		<beans:property name="maxLifetime" value="1800000" /> <!-- 커넥션 갱신 주기: dbms의 타임아웃 값보다 작아야 함. 현재 kcdc 서버 wait_timeout: 3600s --> 
+	</beans:bean>
+	
+</beans:beans>

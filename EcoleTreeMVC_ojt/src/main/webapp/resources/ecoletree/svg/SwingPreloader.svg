@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="100px"
+	 height="100px" viewBox="0 0 100 100" enable-background="new 0 0 100 100" xml:space="preserve">
+
+<g id="Group-2">
+	<g>
+		<rect opacity="0" x="31.826" y="34.087" fill="#2B0960" width="4.858" height="10">
+			<animateTransform attributeName="transform"
+                          attributeType="XML"
+                          type="translate"
+                          dur="2s"
+                          begin="0"
+                          values="0,20;0,-20;0,20;"
+                          repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;1;0"  dur="4s" repeatCount="indefinite" />
+		</rect>
+		<rect opacity="0" x="39.698" y="34.087" fill="#2B0960" width="4.858" height="10">
+			<animateTransform attributeName="transform"
+                          attributeType="XML"
+                          type="translate"
+                          dur="2s"
+                          begin="0.1"
+                          values="0,20;0,-20;0,20;"
+                          repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;1;0"  dur="4s" repeatCount="indefinite" />
+		</rect>
+		<rect opacity="0" x="47.571" y="34.087" fill="#2B0960" width="4.858" height="10">
+			<animateTransform attributeName="transform"
+                          attributeType="XML"
+                          type="translate"
+                          dur="2s"
+                          begin="0.2"
+                          values="0,20;0,-20;0,20;"
+                          repeatCount="indefinite"/>
+          	<animate attributeName="opacity" values="0;1;0"  dur="4s" repeatCount="indefinite" />
+		</rect>
+		<rect opacity="0" x="55.444" y="34.087" fill="#2B0960" width="4.858" height="10">
+			<animateTransform attributeName="transform"
+                          attributeType="XML"
+                          type="translate"
+                          dur="2s"
+                          begin="0.3"
+                          values="0,20;0,-20;0,20;"
+                          repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;1;0"  dur="4s" repeatCount="indefinite" />
+		</rect>
+		<rect opacity="0" x="63.317" y="34.087" fill="#2B0960" width="4.858" height="10">
+			<animateTransform attributeName="transform"
+                          attributeType="XML"
+                          type="translate"
+                          dur="2s"
+                          begin="0.4"
+                          values="0,20;0,-20;0,20;"
+                          repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0;1;0"  dur="4s" repeatCount="indefinite" />
+		</rect>
+	</g>
+
+</g>
+</svg>

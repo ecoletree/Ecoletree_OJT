@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE tiles-definitions PUBLIC 
+	"-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" 
+	"http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<!-- 화면의 특정 영역만 교체하기 위해 사용 -->
+<!-- 해더는 둔 상태에서 바디 부분만 교체 -->
+
+<tiles-definitions>
+
+	<definition name=".serviceMain" template="/WEB-INF/views/service/serviceMain.jsp">
+		<put-attribute name="serviceHeader" value="/WEB-INF/views/layout/header.jsp" />
+		<put-attribute name="serviceBody" value="/WEB-INF/views/layout/body.jsp" />
+		<put-attribute name="serviceFooter" value="/WEB-INF/views/layout/footer.jsp" />
+	</definition>
+
+	<definition name=".service.*.*.*" extends=".serviceMain">
+		<put-attribute name="serviceBody" value="/WEB-INF/views/service/{1}/{2}/{3}.jsp" />
+	</definition>
+	<definition name=".service.*.*" extends=".serviceMain">
+		<put-attribute name="serviceBody" value="/WEB-INF/views/service/{1}/{2}.jsp" />
+	</definition>
+	<definition name=".service.*" extends=".serviceMain">
+		<put-attribute name="serviceBody" value="/WEB-INF/views/service/{1}.jsp" />
+	</definition>
+
+</tiles-definitions>
