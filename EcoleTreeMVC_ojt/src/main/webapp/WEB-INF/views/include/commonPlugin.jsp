@@ -41,15 +41,29 @@
 <script src="${cp }/resources/ecoletree/js/plugin/crypto-js/crypto-js.js"></script>
 
 <!-- Plugin JS : Multi Language -->
-<script src="${cp }/resources/ecoletree/js/plugin/jquery-i18n/jquery.i18n.properties-1.0.9.js"></script>
+<%-- <script src="${cp }/resources/ecoletree/js/plugin/jquery-i18n/jquery.i18n.properties-1.0.9.js"></script> --%>
 
-<!-- EcoleTree JS FILE -->
-<script src="${cp }/resources/ecoletree/js/util/serviceUtil.js"></script>
-<script src="${cp }/resources/ecoletree/js/util/validateUtil.js"></script>
+<!-- Plugin JS : XLSX -->
+<script src="${cp }/jslib/ecoletreeLibraryJS/plugin/sheetjs-master/xlsx.full.min.js"></script>
 
+<!-- Plugin JS : ctypto -->
+<script src="${cp }/jslib/ecoletreeLibraryJS/plugin/crypto-js/crypto-js.js"></script>
+<!-- EcoleTree Util JS FILE -->
+<script src="${cp }/jslib/ecoletreeLibraryJS/util/serviceUtil.js"></script>
+<script src="${cp }/jslib/ecoletreeLibraryJS/util/objectUtil.js"></script>
+<script src="${cp }/jslib/ecoletreeLibraryJS/util/dateUtil.js"></script>
+<script src="${cp }/jslib/ecoletreeLibraryJS/util/stringUtil.js"></script>
+<script src="${cp }/jslib/ecoletreeLibraryJS/util/validationUtil.js"></script>
+<script src="${cp }/jslib/ecoletreeLibraryJS/util/i18nextUtil.js"></script>
+<script src="${cp }/jslib/ecoletreeLibraryJS/util/aesUtil.js"></script>
+<script src="${cp }/jslib/ecoletreeLibraryJS/util/excelUtil.js"></script>
+<!-- Plugin JS : i18next -->
+<script src="${cp }/jslib/ecoletreeLibraryJS/plugin/i18next/i18n/i18next.min.js"></script>
+<script src="${cp }/jslib/ecoletreeLibraryJS/plugin/i18next/backend/i18nextHttpBackend.min.js"></script>
+<script src="${cp }/jslib/ecoletreeLibraryJS/plugin/i18next/i18n/jquery-i18next.min.js"></script>
+<script src="${cp }/jslib/ecoletreeLibraryJS/plugin/i18next/languageDetector/i18nextBrowserLanguageDetector.min.js"></script>
 <!-- App VIEW Controller -->
-<script src="${cp }/resources/service/js/common/common.js?r=1"></script>
-<script src="${cp }/resources/service/js/common/aesUtil.js"></script>
+<script src="${cp }/jslib/ecoletreeLibraryJS/common/common.js"></script>
 
 
 <%--<script src="${cp }/resources/ecoletree/js/plugin/datepicker/bootstrap-datepicker.kr.js"></script>--%>

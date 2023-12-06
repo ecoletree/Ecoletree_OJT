@@ -10,3 +10,6 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 
 <c:set var="cp" value="${pageContext.request.contextPath }" />
+<script>
+sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
+</script>

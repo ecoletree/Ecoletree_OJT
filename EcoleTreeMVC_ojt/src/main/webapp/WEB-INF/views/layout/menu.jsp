@@ -14,12 +14,12 @@
                             <li class="active">
                                 <a href="#" title="Category" data-filter-tags="category">
                                     <i class="fal fa-file"></i>
-                                    <span class="nav-link-text" data-i18n="nav.category">AJAX 호출</span>
+                                    <span class="nav-link-text" data-i18n="nav.category">SAMPLE</span>
                                 </a>
                                 <ul>
                                     <li>
-                                        <a href="${cp }/service/enc/propertiesEnc" title="Menu child" data-filter-tags="utilities menu child">
-                                            <span class="nav-link-text" data-i18n="nav.utilities_menu_child">callService,callView</span>
+                                        <a href="${cp }/sample" title="Menu child" data-filter-tags="utilities menu child">
+                                            <span class="nav-link-text" data-i18n="nav.utilities_menu_child">sample</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -31,12 +31,12 @@
                                 </a>
                                 <ul>
                                 	<li>
-                                        <a href="${cp }/employeeMgt/list" title="Menu child" data-filter-tags="utilities menu child">
+                                        <a href="${cp }/sample/table" title="Menu child" data-filter-tags="utilities menu child">
                                             <span class="nav-link-text" data-i18n="nav.utilities_menu_child">사원 검색</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="${cp }/employeeMgt/list" title="Menu child" data-filter-tags="utilities menu child">
+                                        <a href="${cp }/sample/save" title="Menu child" data-filter-tags="utilities menu child">
                                             <span class="nav-link-text" data-i18n="nav.utilities_menu_child">사원 생성</span>
                                         </a>
                                     </li>
