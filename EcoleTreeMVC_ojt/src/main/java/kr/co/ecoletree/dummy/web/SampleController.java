@@ -20,26 +20,36 @@ import kr.co.ecoletree.common.base.web.ETBaseController;
 @RequestMapping("/sample")
 public class SampleController extends ETBaseController {
 
-private static final String JSP_PATH = ".service.body";
+private static final String JSP_PATH = ".service.body.sample";
 	
 	@RequestMapping("")
 	public ModelAndView openSample(ModelAndView mav, Map<String, Object> params) {
 		mav.setViewName(JSP_PATH + ".sample");
 		return mav;
 	}
+	@RequestMapping("/call")
+	public ModelAndView openServiceSample(ModelAndView mav, Map<String, Object> params) {
+		mav.setViewName(JSP_PATH + ".serviceSample");
+		return mav;
+	}
+	@RequestMapping("/select")
+	public ModelAndView openSelectSample(ModelAndView mav, Map<String, Object> params) {
+		mav.setViewName(JSP_PATH + ".selectSample");
+		return mav;
+	}
 	@RequestMapping("/table")
 	public ModelAndView openTableSample(ModelAndView mav, Map<String, Object> params) {
-		mav.setViewName(JSP_PATH + ".empList");
+		mav.setViewName(JSP_PATH + ".tableSample");
 		return mav;
 	}
-	@RequestMapping("/save")
-	public ModelAndView openSaveFormSample(ModelAndView mav, Map<String, Object> params) {
-		mav.setViewName(JSP_PATH + ".createEmp");
+	@RequestMapping("/datePicker")
+	public ModelAndView openDatePickerSample(ModelAndView mav, Map<String, Object> params) {
+		mav.setViewName(JSP_PATH + ".datePickerSample");
 		return mav;
 	}
-	@RequestMapping("/update")
-	public ModelAndView openUpdateFormSample(ModelAndView mav, Map<String, Object> params) {
-		mav.setViewName(JSP_PATH + ".updateEmp");
+	@RequestMapping("/form")
+	public ModelAndView openFormSample(ModelAndView mav, Map<String, Object> params) {
+		mav.setViewName(JSP_PATH + ".formSample");
 		return mav;
 	}
 }

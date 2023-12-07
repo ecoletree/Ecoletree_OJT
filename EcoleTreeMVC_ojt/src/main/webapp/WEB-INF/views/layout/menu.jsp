@@ -14,12 +14,37 @@
                             <li class="active">
                                 <a href="#" title="Category" data-filter-tags="category">
                                     <i class="fal fa-file"></i>
-                                    <span class="nav-link-text" data-i18n="nav.category">SAMPLE</span>
+                                    <span class="nav-link-text" data-i18n="nav.category">JS LIBRARY SAMPLES</span>
                                 </a>
                                 <ul>
+<!--                                     <li> -->
+<%--                                         <a href="${cp }/sample" title="Menu child" data-filter-tags="utilities menu child"> --%>
+<!--                                             <span class="nav-link-text" data-i18n="nav.utilities_menu_child">sample</span> -->
+<!--                                         </a> -->
+<!--                                     </li> -->
                                     <li>
                                         <a href="${cp }/sample" title="Menu child" data-filter-tags="utilities menu child">
-                                            <span class="nav-link-text" data-i18n="nav.utilities_menu_child">sample</span>
+                                            <span class="nav-link-text" data-i18n="nav.utilities_menu_child">CallService,CallView</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="${cp }/sample" title="Menu child" data-filter-tags="utilities menu child">
+                                            <span class="nav-link-text" data-i18n="nav.utilities_menu_child">Make select</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="${cp }/sample" title="Menu child" data-filter-tags="utilities menu child">
+                                            <span class="nav-link-text" data-i18n="nav.utilities_menu_child">Data-Tables</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="${cp }/sample" title="Menu child" data-filter-tags="utilities menu child">
+                                            <span class="nav-link-text" data-i18n="nav.utilities_menu_child">Date Picker</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="${cp }/sample" title="Menu child" data-filter-tags="utilities menu child">
+                                            <span class="nav-link-text" data-i18n="nav.utilities_menu_child">Form Validation</span>
                                         </a>
                                     </li>
                                 </ul>
@@ -42,5 +67,6 @@
                                     </li>
                                 </ul>
                             </li>
+                            
                         </ul>
                     </nav>
