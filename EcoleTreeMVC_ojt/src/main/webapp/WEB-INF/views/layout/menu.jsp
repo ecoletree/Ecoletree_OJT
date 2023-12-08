@@ -23,28 +23,23 @@
 <!--                                         </a> -->
 <!--                                     </li> -->
                                     <li>
-                                        <a href="${cp }/sample" title="Menu child" data-filter-tags="utilities menu child">
-                                            <span class="nav-link-text" data-i18n="nav.utilities_menu_child">CallService,CallView</span>
+                                        <a href="${cp }/sample/select" title="Menu child" data-filter-tags="utilities menu child">
+                                            <span class="nav-link-text" data-i18n="nav.utilities_menu_child">callService - Make select</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="${cp }/sample" title="Menu child" data-filter-tags="utilities menu child">
-                                            <span class="nav-link-text" data-i18n="nav.utilities_menu_child">Make select</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="${cp }/sample" title="Menu child" data-filter-tags="utilities menu child">
+                                        <a href="${cp }/sample/table" title="Menu child" data-filter-tags="utilities menu child">
                                             <span class="nav-link-text" data-i18n="nav.utilities_menu_child">Data-Tables</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="${cp }/sample" title="Menu child" data-filter-tags="utilities menu child">
+                                        <a href="${cp }/sample/datePicker" title="Menu child" data-filter-tags="utilities menu child">
                                             <span class="nav-link-text" data-i18n="nav.utilities_menu_child">Date Picker</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="${cp }/sample" title="Menu child" data-filter-tags="utilities menu child">
-                                            <span class="nav-link-text" data-i18n="nav.utilities_menu_child">Form Validation</span>
+                                        <a href="${cp }/sample/form" title="Menu child" data-filter-tags="utilities menu child">
+                                            <span class="nav-link-text" data-i18n="nav.utilities_menu_child">Form Validation - create</span>
                                         </a>
                                     </li>
                                 </ul>

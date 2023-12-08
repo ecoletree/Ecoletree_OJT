@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	* Copyright (c) 2017 EcoleTree. All Rights Reserved.
+	* 
+	* Author : 김경현	
+	* Created : 2023. 12. 07
+	* DESC :  js-data sample
+-->
+<mapper namespace="kr.co.ecoletree.service.dummy.mapper.SampleMapper">
+
+<!-- select box sample -->
+	<select id="selectCategoryList" parameterType="map" resultType="map">
+		select
+			a.nation_id 
+			,a.main_id 
+			,a.middle_id 
+			,a.sub_id  
+			,a.category_name
+		from TBL_TABLE a
+		where 1=1
+	</select>
+	
+<!-- data tables sample -->	
+	<select id="selectFormData">
+		select
+			a.form_cd 
+			,a.title 
+			,a.email 
+			,a.phone 
+			,a.start_time 
+			,a.end_time	
+		from TBL_FORM_SAMPLE a
+		where 1=1
+		<if test='title != null and title != ""'>
+			and a.title like concat('%',#{title},'%');
+		</if>
+	</select>
+	
+<!-- form sample -->	
+	<insert id="insertFormData" parameterType="map">
+		insert into TBL_FORM_SAMPLE(
+			title 
+			,email 
+			,phone 
+			,start_time 
+			,end_time	
+		)values(
+			#{title }
+			,#{email }
+			,#{phone }
+			,#{start_time }
+			,#{end_time}
+		)
+	</insert>
+	
+	
+<!-- form sample -->	
+	<update id="updateFormData" parameterType="map">
+		update TBL_FORM_SAMPLE set
+			title =#{title }	
+			,email =#{email }	
+			,phone =#{phone }	
+			,start_time =#{start_time }	
+			,end_time=#{end_time}	
+		where form_cd = #{form_cd}
+	</update>
+</mapper>

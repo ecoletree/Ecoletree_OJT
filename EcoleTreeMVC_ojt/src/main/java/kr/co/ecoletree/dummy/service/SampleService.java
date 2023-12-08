@@ -8,7 +8,16 @@
 *****************************************************************/
 package kr.co.ecoletree.dummy.service;
 
+import java.util.List;
+import java.util.Map;
+
 public interface SampleService {
+
+	public List<Map<String,Object>> getCategoryData(Map<String, Object> param);
+
+	public int setSampleData(Map<String, Object> param, String type);
+
+	public Map<String, Object> getFormDataList(Map<String, Object> param);
 
 }
 
