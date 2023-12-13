@@ -1,0 +1,72 @@
+CodeSamples=[
+	{
+		"code_cd" : "R001",
+		"p_code_cd" : "R000",
+		"code_name" : "사원",
+		"code_value" : null,
+		"description" : null,
+		"has_parent" : "Y",
+		"delete_yn" : "N",
+		"order_num" : 0
+	},
+	{
+		"code_cd" : "R002",
+		"p_code_cd" : "R000",
+		"code_name" : "주임",
+		"code_value" : null,
+		"description" : null,
+		"has_parent" : "Y",
+		"delete_yn" : "N",
+		"order_num" : 1
+	},
+	{
+		"code_cd" : "R003",
+		"p_code_cd" : "R000",
+		"code_name" : "대리",
+		"code_value" : null,
+		"description" : null,
+		"has_parent" : "Y",
+		"delete_yn" : "N",
+		"order_num" : 2
+	},
+	{
+		"code_cd" : "R004",
+		"p_code_cd" : "R000",
+		"code_name" : "과장",
+		"code_value" : null,
+		"description" : null,
+		"has_parent" : "Y",
+		"delete_yn" : "N",
+		"order_num" : 3
+	},
+	{
+		"code_cd" : "R005",
+		"p_code_cd" : "R000",
+		"code_name" : "차장",
+		"code_value" : null,
+		"description" : null,
+		"has_parent" : "Y",
+		"delete_yn" : "N",
+		"order_num" : 4
+	},
+	{
+		"code_cd" : "R006",
+		"p_code_cd" : "R000",
+		"code_name" : "부장",
+		"code_value" : null,
+		"description" : null,
+		"has_parent" : "Y",
+		"delete_yn" : "N",
+		"order_num" : 5
+	},
+	{
+		"code_cd" : "R007",
+		"p_code_cd" : "R000",
+		"code_name" : "대표",
+		"code_value" : null,
+		"description" : null,
+		"has_parent" : "Y",
+		"delete_yn" : "N",
+		"order_num" : 6
+	}
+]

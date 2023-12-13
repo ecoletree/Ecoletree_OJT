@@ -3,11 +3,11 @@
  * 
  * @Author : kkh
  * @CreateDate : 2023. 12. 06.
- * @DESC : 사원관리
+ * @DESC : script sample
  ******************************************************************************/
 (function(et, ctrl) {
 	if (_.isObject(et) && et.name === ETCONST.PROJECT_NAME) {
-		if (!et.vc || et.vc.name !== "empMgt") {
+		if (!et.vc || et.vc.name !== "sample") {
 			et.vc= ctrl(et);
 		}
 		
@@ -21,7 +21,7 @@
 	var ctrl = {};
 	
 	ctrl.name = "sample";
-	ctrl.path = "/dummy";
+	ctrl.path = "/sample";
 
 	
 	// ============================== 화면 컨트롤 ==============================

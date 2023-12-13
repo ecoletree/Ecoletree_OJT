@@ -6,7 +6,7 @@
  * File Name : SampleMapper.java
  * DESC : 
 *****************************************************************/
-package kr.co.ecoletree.dummy.mapper;
+package kr.co.ecoletree.service.dummy.mapper;
 
 import java.util.List;
 import java.util.Map;
@@ -14,15 +14,9 @@ import java.util.Map;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface SampleMapper {
+public interface SampleDataMapper {
 
-	public List<Map<String, Object>> selectCategoryList(Map<String, Object> param);
-
-	public int insertFormData(Map<String, Object> param);
-
-	public int updateFormData(Map<String, Object> param);
-
-	public List<Map<String, Object>> selectFormData(Map<String, Object> param);
+	public List<Map<String, Object>> selectCodeList(Map<String, Object> param);
 
 }
 
