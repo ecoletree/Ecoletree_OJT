@@ -6,7 +6,7 @@
  * File Name : EmpMgtController.java
  * DESC : 
 *****************************************************************/
-package kr.co.ecoletree.service.empMgt.web;
+package kr.co.ecoletree.web;
 
 import java.util.Map;
 

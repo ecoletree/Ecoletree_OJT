@@ -7,7 +7,7 @@
 	* Created : 2023. 12. 07
 	* DESC :  SQL sample
 -->
-<mapper namespace="kr.co.ecoletree.service.dummy.mapper.SampleDataMapper">
+<mapper namespace="kr.co.ecoletree.service.mapper.MapperClassName">
 
 
 	

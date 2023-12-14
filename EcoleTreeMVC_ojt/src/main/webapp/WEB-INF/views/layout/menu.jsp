@@ -18,7 +18,7 @@
                                 </a>
                                 <ul>
                                     <li>
-                                        <a href="${cp }/sample/datePicker" title="Menu child" data-filter-tags="utilities menu child">
+                                        <a href="${cp }/datePicker" title="Menu child" data-filter-tags="utilities menu child">
                                             <span class="nav-link-text" data-i18n="nav.utilities_menu_child">Date Picker</span>
                                         </a>
                                     </li>

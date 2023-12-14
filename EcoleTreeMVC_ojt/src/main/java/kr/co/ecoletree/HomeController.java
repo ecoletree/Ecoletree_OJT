@@ -3,6 +3,7 @@ package kr.co.ecoletree;
 import java.text.DateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * Handles requests for the application home page.
@@ -34,5 +36,15 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		return ".serviceMain";
+	}
+	/** 데이트 피커 페이지 오픈
+	 * @param mav
+	 * @param params
+	 * @return
+	 */
+	@RequestMapping("/datePicker")
+	public ModelAndView openDatePickerSample(ModelAndView mav, Map<String, Object> params) {
+		mav.setViewName(".service.body.jqueryDatePicker");
+		return mav;
 	}
 }

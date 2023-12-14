@@ -62,45 +62,6 @@
 	    }, {})
 	}
 	
-	/**
-	 * 버튼에 Class를 셋팅한다
-	 */
-	ctrl.btnRuleClassSetting = function(selector) {
-		$.each(selector, function (index, item) {
-			if (typeof item === "string") {
-				if (!$(item).hasClass(index)){
-					$(item).addClass(index);
-					$(item).hide();
-				}
-			} else {
-				item.forEach(elem => {
-					if (!$(elem).hasClass(index)){
-						$(elem).addClass(index);
-						$(elem).hide();
-					}
-				})
-				
-			}
-		})
-	}
-	
-	/**
-	 * 클래스를 가지고 있으면 
-	 * 권한을 보고 Visible 처리 한다
-	 */
-	ctrl.btnRuleSetting = function() {
-		$.each(et.common.RULL_CLASS, function (index, item) {
-			var rule = $("a[name='aHeaderMenu']").parent(".sel").data();
-			if (rule === undefined) {
-				rule = $("a[name='aHeaderTopMenu'].sel").data();
-			}
-			
-			if (rule) {
-				rule[item] === "Y" ? $("button."+item).show() : $("button."+item).hide(); 
-				rule[item] === "Y" ? $("select."+item).show() : $("select."+item).hide();
-			}
-		})
-	}
 	
 	return ctrl;
 }));
