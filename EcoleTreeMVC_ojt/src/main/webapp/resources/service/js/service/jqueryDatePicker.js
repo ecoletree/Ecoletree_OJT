@@ -3,6 +3,7 @@
 		if (!et.vc || et.vc.name !== "jqueryDatePicker") {
 			et.vc= ctrl(et);
 		}
+		
 	} else {
 		console.error("ecoletree OR ETCONST is not valid. please check that common.js file was imported.");
 	}

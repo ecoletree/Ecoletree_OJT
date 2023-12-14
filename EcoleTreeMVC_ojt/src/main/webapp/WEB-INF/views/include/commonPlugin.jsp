@@ -9,7 +9,7 @@
 <script src="${cp }/resources/smartadmin/js/datagrid/datatables/datatables.export.js"></script>
 <%--<script src="${cp }/resources/ecoletree/js/plugin/jquery-datatable-plugins/pagination/full_numbers_no_ellipses.js"></script>--%>
 <%-- <script src="${cp }/resources/ecoletree/js/plugin/jquery-datatable-plugins/pagination/simple_numbers_no_ellipses.js"></script> --%>
-<%-- <script src="${cp }/resources/smartadmin/js/dependency/moment/moment.js"></script> --%>
+<script src="${cp }/resources/smartadmin/js/dependency/moment/moment.js"></script>
 <script src="${cp }/resources/smartadmin/js/formplugins/bootstrap-colorpicker/bootstrap-colorpicker.js"></script>
 <script src="${cp }/resources/smartadmin/js/formplugins/bootstrap-datepicker/bootstrap-datepicker.js"></script>
 <script src="${cp }/resources/smartadmin/js/formplugins/bootstrap-daterangepicker/bootstrap-daterangepicker.js"></script>
@@ -63,6 +63,8 @@
 <script src="${cp }/jslib/ecoletreeLibraryJS/plugin/i18next/backend/i18nextHttpBackend.min.js"></script>
 <script src="${cp }/jslib/ecoletreeLibraryJS/plugin/i18next/i18n/jquery-i18next.min.js"></script>
 <script src="${cp }/jslib/ecoletreeLibraryJS/plugin/i18next/languageDetector/i18nextBrowserLanguageDetector.min.js"></script>
+<!-- Plugin JS : jquery-range-picker -->
+<script src="${cp }/jslib/ecoletreeLibraryJS/plugin/jquery-date-range-picker/src/jquery.daterangepicker.js"></script>
 <!-- Plugin JS : moment -->
 <script src="${cp }/jslib/ecoletreeLibraryJS/plugin/moment/moment.js"></script>
 <!-- App VIEW Controller -->

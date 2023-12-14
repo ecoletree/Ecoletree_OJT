@@ -47,6 +47,9 @@
 <!-- ecoletree CSS -->
 <link rel="stylesheet" href="${cp }/resources/ecoletree/css/ecoletree_global.css?test=3">
 
+<!-- Plugin CSS : jquery-range-picker -->
+<link rel="stylesheet" href="${cp }/jslib/ecoletreeLibraryJS/plugin/jquery-date-range-picker/dist/daterangepicker.min.css">
+
 <!-- Favicon -->
 <link rel="shortcut icon" href="${cp }/resources/ecoletree/img/favicon.ico">
 
