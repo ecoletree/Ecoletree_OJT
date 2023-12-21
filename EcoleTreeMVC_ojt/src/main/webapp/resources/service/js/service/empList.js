@@ -20,7 +20,7 @@
 	var ctrl = {};
 	
 	ctrl.name = "empList";
-	ctrl.path = "";
+	ctrl.path = "/emp";
 	ctrl.empData_sample = JSON.parse(JSON.stringify(EmpSamples));
 	ctrl.codeData_sample = JSON.parse(JSON.stringify(CodeSamples));
 	
@@ -83,7 +83,8 @@
 	
 	ctrl.tbListRowClickHandler = function($target, row, col){
 		var self = et.vc;
-		var rowData = et.getRowData("#tbList",target.closest("tr"));
+		var rowData = et.getRowData("#tbList",$target.closest("tr"));
+		new ETService().callView(self.path+"/update",rowData);
 		
 	}
 

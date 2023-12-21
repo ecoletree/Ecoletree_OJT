@@ -10,11 +10,14 @@ package kr.co.ecoletree.web;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.ecoletree.common.base.web.ETBaseController;
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/emp")
@@ -31,8 +34,10 @@ public class EmpMgtController extends ETBaseController{
 		return mav;
 	}
 	@RequestMapping("/update")
-	public ModelAndView openUpdateEmp(ModelAndView mav, Map<String, Object> params) {
+	public ModelAndView openUpdateEmp(ModelAndView mav,HttpServletRequest req) {
+		Map<String, Object> params = getParamToMap(req);
 		mav.setViewName(".service.body.updateEmp");
+		mav.addObject("initData", JSONObject.fromObject(params));
 		return mav;
 	}
 }
