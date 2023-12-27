@@ -21,8 +21,6 @@
 	
 	ctrl.name = "empList";
 	ctrl.path = "/emp";
-	ctrl.empData_sample = JSON.parse(JSON.stringify(EmpSamples));
-	ctrl.codeData_sample = JSON.parse(JSON.stringify(CodeSamples));
 	
 	// ============================== 화면 컨트롤 ==============================
 	/**
@@ -31,29 +29,45 @@
 	ctrl.init = function(initData) {
 		var self = et.vc;
 		
+		new ETService().setSuccessFunction(self.getCodeListHandler).callService("/sample/code", {});
+
 		self.btnClickHandler();
-		self.createDataTables();
+		
 		et.setDataTableRowSelection("#tbList",self.tbListRowClickHandler);
-		et.makeSelectOption(self.codeData_sample, {value:"code_cd",text:"code_name"}, "#selPosition", "전체");
+		
+		
 	};
 
 	// ============================== 동작 컨트롤 ==============================
 
 	ctrl.btnClickHandler = function(){
 		var self = et.vc;
+		
 		$("#btnSearch").click(self.btnSearchClickHandler);
+		
+		$("#btnSearch").trigger("click");
+		
+		et.setEnterKeyDownEvent("#iptSearch",self.btnSearchClickHandler);
 	}
+	
+	ctrl.getCodeListHandler = function(result){
+		var self = et.vc;
+		var codeList = result.data;
+		et.makeSelectOption(codeList, {value:"code_cd",text:"code_name"}, "#selPosition", "전체");
+	}
+	
 	// ============================== 이벤트 리스너 ==============================
 	
 	ctrl.btnSearchClickHandler = function(){
 		var self = et.vc;
-		var sel = $("#selPosition").val();
-		console.log(sel);
-		debugger;
+		var params = {};
+		params.emp_name = $("#iptSearch").val();
+		params.position = $("#selPosition").val();
+		self.createDataTables(params);
 	}
 	// ============================== DataTables 생성, 이벤트들 ==============================
 	
-	ctrl.createDataTables = function(){
+	ctrl.createDataTables = function(postData){
 		var self = et.vc;
 		var columns = [
 			{data : "emp_cd", render:function(data,type,row,meta){
@@ -62,15 +76,15 @@
 			,{data : "emp_num"}
 			,{data : "emp_name"}
 			,{data : "emp_engname"}
-			,{data : "position"}
+			,{data : "position",render:function(data,type,row){
+				return row.position_name;
+			}}
 			,{data : "email_1"}
 			,{data : "phone_num"}
 			,{data : "birthday"}
 		]
 		
-		let empData_sample = JSON.parse(JSON.stringify(EmpSamples));
-//		(columns, self.path+"/list", param, drawCallback, typeValue, info, dataSet)
-		var option = et.createDataTableSettings(columns, null, {}, self.dataTableDrawCallback,"",false,empData_sample);
+		var option = et.createDataTableSettings(columns,"/sample/list", postData, self.dataTableDrawCallback);
 		option.paging = false;
 		
 		$("#tbList").DataTable(option);

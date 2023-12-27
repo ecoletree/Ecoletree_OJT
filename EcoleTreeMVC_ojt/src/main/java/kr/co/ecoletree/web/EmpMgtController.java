@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.ecoletree.common.base.web.ETBaseController;
+import kr.co.ecoletree.web.EmpSampeDataCotroller.SAMPLE_DATA_LIST;
+import kr.co.ecoletree.web.EmpSampeDataCotroller.SAMPLE_DATA_SETTER;
 import net.sf.json.JSONObject;
 
 @Controller
@@ -25,6 +27,13 @@ public class EmpMgtController extends ETBaseController{
 
 	@RequestMapping("/list")
 	public ModelAndView openEmpList(ModelAndView mav, Map<String, Object> params) {
+		//---- js sample 용도 입니다. java 로직 생성 시에 지워주세요.
+		if(SAMPLE_DATA_LIST.EMP_LIST.size() <= 0) {
+			SAMPLE_DATA_SETTER sampleSet = new SAMPLE_DATA_SETTER();
+			sampleSet.setEmpSampleData("empData");
+		}
+		
+		//-----------------------------------------------------------
 		mav.setViewName(".service.body.empList");
 		return mav;
 	}
@@ -40,5 +49,6 @@ public class EmpMgtController extends ETBaseController{
 		mav.addObject("initData", JSONObject.fromObject(params));
 		return mav;
 	}
+	
 }
 

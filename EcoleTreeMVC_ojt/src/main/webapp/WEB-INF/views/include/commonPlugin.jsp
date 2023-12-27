@@ -85,11 +85,6 @@
 <!-- Excel Download -->
 <script src="${cp }/resources/ecoletree/js/plugin/sheetjs-master/xlsx.full.min.js"></script>
 
-<!-- sample data  -->
-<script src="${cp }/resources/service/js/service/sample/data/empSamples.json"></script>
-<script src="${cp }/resources/service/js/service/sample/data/codeSamples.json"></script>
-
-
 <script type="text/javascript">
 
 	/**

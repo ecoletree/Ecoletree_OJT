@@ -22,8 +22,6 @@
 	
 	ctrl.name = "createEmp";
 	ctrl.path = "";
-	ctrl.empData_sample = JSON.parse(JSON.stringify(EmpSamples));
-	ctrl.codeData_sample = JSON.parse(JSON.stringify(CodeSamples));
 	
 	// ============================== 화면 컨트롤 ==============================
 	/**
