@@ -29,24 +29,25 @@
 	 */
 	ctrl.init = function(initData) {
 		var self = et.vc;
-		
-		self.setView();
+		new ETService().setSuccessFunction(self.getCodeListHandler).callService("/sample/code", {});
+		self.setValidation();
 		self.addEventListener();
 		
 	};
 
-	ctrl.setView = function(){
+	ctrl.getCodeListHandler = function(result){
 		var self = et.vc;
-		et.makeSelectOption(self.codeData_sample, {value:"code_cd",text:"code_name"}, "#selPosition", "전체");
-		
-		
+		var codeList = result.data;
+		et.makeSelectOption(codeList, {value:"code_cd",text:"code_name"}, "#selPosition", "전체");
 	}
 	// ============================== 동작 컨트롤 ==============================
 
 	ctrl.setValidation = function(){
 		var self = et.vc;
 		var addValidate = new ETValidate("#addForm").setSubmitHandler(self.addSubmitCallbackHandler).setShowErrors(et.setErrorFunction());
+		addValidate.validateRules("emp_num", addValidate.REQUIRED, "사번은 필수입니다.");
 		addValidate.validateRules("emp_name", addValidate.REQUIRED, "이름은 필수입니다.");
+		addValidate.validateRules("position", addValidate.REQUIRED, "직급은 필수입니다.");
 		addValidate.apply();
 	}
 	
@@ -65,18 +66,16 @@
 
 	ctrl.addSubmitCallbackHandler = function(form){
 		var self = et.vc;
-		console.log(form);
 		var formData = ETValidate.convertFormToObject(form, true, true);
-		console.log(formData);
-		// 여기에서 json파일에 넣도록
-//		EmpSamples.push(formData);
-//		new ETService().setSuccessFunction(self.addSubmitSuccessHandler).callService(self.path + "/생성url", formData);
-		debugger;
+		new ETService().setSuccessFunction(self.addSubmitSuccessHandler).callService("/sample/create", formData);
 		
 	}
 	
 	ctrl.addSubmitSuccessHandler = function(result){
 		 var self = et.vc;
+		 console.log(result);
+		debugger;
+		
 	}
 	
 	

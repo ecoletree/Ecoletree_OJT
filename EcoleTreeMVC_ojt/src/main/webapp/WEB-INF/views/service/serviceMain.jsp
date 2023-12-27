@@ -22,6 +22,8 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
     </head>
     
     <body class="mod-bg-1 ">
+    <!-- alert 모달 -->
+	<c:import url="/common.alert.sp" charEncoding="UTF-8" />
         <!-- BEGIN Page Wrapper -->
         <div class="page-wrapper">
             <div class="page-inner">
@@ -50,6 +52,7 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
                 </div>
             </div>
         </div>
+        
         <!-- END Page Wrapper -->
        
         <script src="${cp }/resources/smartadmin/js/app.bundle.js"></script>

@@ -8,7 +8,7 @@
 		<div class="formWrap">
 			<label class="formLabel">사번</label>
 			<div class="formInput">
-				<input type="text" disabled="disabled">
+				<input type="text" name ="emp_num" disabled="disabled">
 			</div>
 		</div>
 		<div class="formWrap">

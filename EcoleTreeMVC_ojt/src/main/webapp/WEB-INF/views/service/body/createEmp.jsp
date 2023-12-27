@@ -6,6 +6,12 @@
 <form id="addForm" method="post" autocomplete="off">
 	<fieldset>
 		<div class="formWrap">
+			<label class="formLabel">사번<span class="require" style="color:red;">*</span></label>
+			<div class="formInput">
+				<input type="text" name="emp_num" >
+			</div>
+		</div>
+		<div class="formWrap">
 			<label class="formLabel">이름<span class="require" style="color:red;">*</span></label>
 			<div class="formInput">
 				<input type="text" name="emp_name" >
