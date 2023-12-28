@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import kr.co.ecoletree.common.base.web.ETBaseController;
+import kr.co.ecoletree.common.util.MapBuilder;
 import kr.co.ecoletree.web.EmpSampeDataCotroller.SAMPLE_DATA_LIST;
 import kr.co.ecoletree.web.EmpSampeDataCotroller.SAMPLE_DATA_SETTER;
 import net.sf.json.JSONObject;
@@ -46,7 +47,7 @@ public class EmpMgtController extends ETBaseController{
 	public ModelAndView openUpdateEmp(ModelAndView mav,HttpServletRequest req) {
 		Map<String, Object> params = getParamToMap(req);
 		mav.setViewName(".service.body.updateEmp");
-		mav.addObject("initData", JSONObject.fromObject(params));
+		mav.addObject("initData", JSONObject.fromObject(MapBuilder.of("rowData", params,"codeList",SAMPLE_DATA_LIST.CODE_LIST)));
 		return mav;
 	}
 	

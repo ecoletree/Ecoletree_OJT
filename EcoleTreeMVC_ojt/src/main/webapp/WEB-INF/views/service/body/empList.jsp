@@ -8,7 +8,6 @@
 	<input type="button" id="btnSearch" value="조회">
 </div>
 <div  style="padding: 20px 30px;float: right;">
-	<input type="button" id="btnCreate" style="margin-right: 10px" value="신규 추가">
 	<input type="button" id="btnDelete" style="" value="삭제">
 </div>
 
