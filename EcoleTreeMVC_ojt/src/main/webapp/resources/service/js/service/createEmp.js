@@ -31,7 +31,7 @@
 		var self = et.vc;
 		new ETService().setSuccessFunction(self.getCodeListHandler).callService("/sample/code", {});
 		self.setValidation();
-		self.addEventListener();
+		$("#btnAdd").click(self.btnAddClickHandler);
 		
 	};
 
@@ -42,6 +42,15 @@
 	}
 	// ============================== 동작 컨트롤 ==============================
 
+
+	// ============================== 이벤트 리스너 ==============================
+	ctrl.btnAddClickHandler = function(){
+		var self = et.vc;
+		$("#addForm").submit();
+	}
+	
+	// ============================== Form 리스너 ==============================
+
 	ctrl.setValidation = function(){
 		var self = et.vc;
 		var addValidate = new ETValidate("#addForm").setSubmitHandler(self.addSubmitCallbackHandler).setShowErrors(et.setErrorFunction());
@@ -51,19 +60,6 @@
 		addValidate.apply();
 	}
 	
-
-	// ============================== 이벤트 리스너 ==============================
-	ctrl.addEventListener = function(){
-		var self = et.vc;
-		$("#btnAdd").click(self.btnAddClickHandler);
-	}
-	ctrl.btnAddClickHandler = function(){
-		var self = et.vc;
-		$("#addForm").submit();
-	}
-	
-	// ============================== Form 리스너 ==============================
-
 	ctrl.addSubmitCallbackHandler = function(form){
 		var self = et.vc;
 		var formData = ETValidate.convertFormToObject(form, true, true);
@@ -74,7 +70,6 @@
 	ctrl.addSubmitSuccessHandler = function(result){
 		 var self = et.vc;
 		 console.log(result);
-		debugger;
 		
 	}
 	

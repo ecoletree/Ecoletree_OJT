@@ -33,14 +33,15 @@
 		var rowData = initData.rowData;
 		var codeList = initData.codeList;
 		et.makeSelectOption(codeList, {value:"code_cd",text:"code_name"}, "#selPosition", "전체");
-		self.setViewData("#editForm",rowData);
+		self.setValidation();
+		self.setFormData("#editForm",rowData);
+		$("#btnEdit").click(self.btnEditClickHandler);
 		
 	};
 
 	// ============================== 동작 컨트롤 ==============================
 	
-	// ============================== 이벤트 리스너 ==============================
-	ctrl.setViewData = function(formId,data){
+	ctrl.setFormData = function(formId,data){
 		var self = et.vc;
 		var triggerElement = [];
 		$(formId).find("input,select").each(function(index,elemt){
@@ -63,14 +64,34 @@
 			}
 		});
 		
+	}
+	// ============================== 이벤트 리스너 ==============================
+	
+	ctrl.btnEditClickHandler = function(){
+		var self = et.vc;
+		$("#editForm").submit();
+	}
+
+	// ============================== Form 리스너 ==============================
+	ctrl.setValidation = function(){
+		var self = et.vc;
+		var editValidate = new ETValidate("#addForm").setSubmitHandler(self.addSubmitCallbackHandler).setShowErrors(et.setErrorFunction());
+		editValidate.validateRules("emp_name", editValidate.REQUIRED, "이름은 필수입니다.");
+		editValidate.validateRules("position", editValidate.REQUIRED, "직급은 필수입니다.");
+		editValidate.apply();
+	}
+	ctrl.addSubmitCallbackHandler = function(form){
+		var self = et.vc;
+		var formData = ETValidate.convertFormToObject(form, true, true);
+		formData.emp_num = $("#iptEmpNum").val();
+		new ETService().setSuccessFunction(self.editSubmitSuccessHandler).callService("/sample/update", formData);
 		
 	}
 	
-	
-	// ============================== DataTables 생성, 이벤트들 ==============================
-
-	// ============================== Form 리스너 ==============================
-
-	
+	ctrl.editSubmitSuccessHandler = function(result){
+		 var self = et.vc;
+		 console.log(result);
+		
+	}
 	return ctrl;
 }));
