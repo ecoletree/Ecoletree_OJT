@@ -8,7 +8,7 @@
 		<div class="formWrap">
 			<label class="formLabel">사번</label>
 			<div class="formInput">
-				<input id="iptEmpNum" type="text" name ="emp_num" disabled="disabled">
+				<input type="text" name ="emp_num" disabled="disabled">
 			</div>
 		</div>
 		<div class="formWrap">
@@ -86,21 +86,3 @@
 <input id="btnEdit" type="button" value ="수정">
 </div>
 </div>
-<script type="text/javascript">
-	$.getScript(getContextPath() + "/resources/service/js/service/updateEmp.js").done(function(script, textStatus) {
-		if (!!ecoletree.vc && ecoletree.vc.name === "updateEmp") {
-			var inter = setInterval(function(){
-				 ecoletree.promiseInit()
-				.then(function(){
-					clearInterval(inter);
-					ecoletree.vc.init(${initData});
-				}, function (){})
-			},300);
-			
-		} else {
-			console.log("vc's name is not index : " + ecoletree.vc.name);
-		}
-	}).fail(function(jqxhr, settings, exception) {
-		console.log(arguments);
-	});
-</script>

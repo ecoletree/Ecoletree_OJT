@@ -86,21 +86,3 @@
 <input id="btnAdd" type="button" value ="추가">
 </div>
 </div>
-<script type="text/javascript">
-	$.getScript(getContextPath() + "/resources/service/js/service/createEmp.js").done(function(script, textStatus) {
-		if (!!ecoletree.vc && ecoletree.vc.name === "createEmp") {
-			var inter = setInterval(function(){
-				 ecoletree.promiseInit()
-				.then(function(){
-					clearInterval(inter);
-					ecoletree.vc.init(${initData});
-				}, function (){})
-			},300);
-			
-		} else {
-			console.log("vc's name is not index : " + ecoletree.vc.name);
-		}
-	}).fail(function(jqxhr, settings, exception) {
-		console.log(arguments);
-	});
-</script>

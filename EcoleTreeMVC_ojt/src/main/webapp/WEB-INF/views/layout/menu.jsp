@@ -11,19 +11,19 @@
                     BEGIN PRIMARY NAVIGATION -->
                     <nav id="js-primary-nav" class="primary-nav" role="navigation">
                         <ul id="js-nav-menu" class="nav-menu">
-                            <li class="active">
-                                <a href="#" title="Category" data-filter-tags="category">
-                                    <i class="fal fa-file"></i>
-                                    <span class="nav-link-text" data-i18n="nav.category">JS LIBRARY SAMPLES</span>
-                                </a>
-                                <ul>
-                                    <li>
-                                        <a href="${cp }/datePicker" title="Menu child" data-filter-tags="utilities menu child">
-                                            <span class="nav-link-text" data-i18n="nav.utilities_menu_child">Date Picker</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>
+<!--                             <li class="active"> -->
+<!--                                 <a href="#" title="Category" data-filter-tags="category"> -->
+<!--                                     <i class="fal fa-file"></i> -->
+<!--                                     <span class="nav-link-text" data-i18n="nav.category">JS LIBRARY SAMPLES</span> -->
+<!--                                 </a> -->
+<!--                                 <ul> -->
+<!--                                     <li> -->
+<%--                                         <a href="${cp }/datePicker" title="Menu child" data-filter-tags="utilities menu child"> --%>
+<!--                                             <span class="nav-link-text" data-i18n="nav.utilities_menu_child">Date Picker</span> -->
+<!--                                         </a> -->
+<!--                                     </li> -->
+<!--                                 </ul> -->
+<!--                             </li> -->
                             <li class="active">
                                 <a href="#" title="Category" data-filter-tags="category">
                                     <i class="fal fa-file"></i>
