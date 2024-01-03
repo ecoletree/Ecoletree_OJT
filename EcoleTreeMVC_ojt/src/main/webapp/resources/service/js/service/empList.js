@@ -99,12 +99,13 @@
 	}
 	
 	ctrl.checkboxHandler = function checkAll(){
-	   if(document.getElementById("cbAllClick").checked==true){  //id 를 사용하여 하나의 객체만을 호출
-         for(var i=0;i<3;i++) document.getElementsByName("checkBox")[i].checked=true;   //name 을 사용하여 배열 형태로 담아 호출
-      }
-      if(document.getElementById("cbAllClick").checked==false){
-         for(var i=0;i<3;i++) document.getElementsByName("checkBox")[i].checked=false;  
-      }
+		var check = document.getElementsByName('checkBox');
+ 	    if(document.getElementById("cbAllClick").checked==true){  //id 를 사용하여 하나의 객체만을 호출
+           for(var i=0;i<check.length;i++) document.getElementsByName("checkBox")[i].checked=true;   //name 을 사용하여 배열 형태로 담아 호출
+        }
+        if(document.getElementById("cbAllClick").checked==false){
+           for(var i=0;i<check.length;i++) document.getElementsByName("checkBox")[i].checked=false;  
+        }
 	}
 	// ============================== Form 리스너 ==============================
 
