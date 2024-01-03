@@ -4,7 +4,9 @@
 
 <div style="height:100px; border: 1px solid gray; padding:30px 60px;">
 	이름<input type="text" id="iptSearch" value="" style="margin-left:30px;">
-	<select id="selPosition"  style="margin-left:8px; width: 150px;"></select>
+	<select id="selPosition"  style="margin-left:8px; width: 150px;">
+
+	</select>
 	<input type="button" id="btnSearch" value="조회">
 </div>
 <div  style="padding: 20px 30px;float: right;">
@@ -25,7 +27,30 @@
 				<th>전화번호</th>
 				<th>생년월일</th>
 			</tr>
+		</thead>
+		<tbody>
+
+		</tbody>
 	</table>
 
 </div>
 
+<!-- 끝: 작성하기 -->
+<script type="text/javascript">
+	$.getScript(getContextPath() + "/resources/service/js/service/empList.js").done(function(script, textStatus) {
+		if (!!ecoletree.vc && ecoletree.vc.name === "empList") {
+			var inter = setInterval(function(){
+				ecoletree.promiseInit()
+						.then(function(){
+							clearInterval(inter);
+							ecoletree.vc.init(${initData});
+						}, function (){})
+			},300);
+
+		} else {
+			console.log("vc's name is not index : " + ecoletree.vc.name);
+		}
+	}).fail(function(jqxhr, settings, exception) {
+		console.log(arguments);
+	});
+</script>
