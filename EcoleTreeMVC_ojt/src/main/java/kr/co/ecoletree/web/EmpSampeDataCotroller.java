@@ -36,7 +36,7 @@ import kr.co.ecoletree.common.util.PropertyUtil;
 import kr.co.ecoletree.common.util.ResultUtil;
 
 @Controller
-@RequestMapping("/sample")
+@RequestMapping("/sample") 
 public class EmpSampeDataCotroller extends ETBaseController {
 	
 	
