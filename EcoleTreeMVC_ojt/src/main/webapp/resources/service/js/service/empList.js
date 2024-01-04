@@ -25,6 +25,8 @@
         ctrl.name = "empList";
         ctrl.path = "/sample";
 
+        var allCheckBox = $("#cbAllClick");
+
 
         // ============================== 화면 컨트롤 ==============================
         /**
@@ -36,20 +38,18 @@
 
             $("#btnSearch").click(self.btnSearchHandler);
 
-            // 체크박스 전체 선택
-            $("#cbAllClick").click(self.checkBoxClickHandler);
+            // 체크박스 전체 선택 이벤트 핸들러
+            allCheckBox.click(self.checkBoxClickHandler);
+
+
+
+            // 체크박스 1개 클릭 이벤트
+            const checkBoxes = $("input.ckb:checkbox")
+            checkBoxes.click(self.singleCheckBoxClickHandler);
 
             et.setDataTableRowSelection("#tbList", self.rowSelectionHandler);
         };
 
-        ctrl.checkBoxClickHandler = function () {
-            var checked = $("#cbAllClick").prop("checked");
-            if (checked) {
-                $("input:checkbox").prop("checked", true);
-            } else {
-                $("input:checkbox").prop("checked", false);
-            }
-        }
 
         ctrl.rowSelectionHandler = function ($target, row, col, columnVisible) {
             var self = et.vc;
@@ -76,12 +76,51 @@
                 }
 
                 et.makeSelectOption(empList, options, "#selPosition", "전체");
+
             }
+            // 아무런 데이터도 받아오지 않은 경우
+            else {
+                // TBD
+            }
+
 
         }
 
         // ============================== 동작 컨트롤 ==============================
 
+        ctrl.checkBoxClickHandler = function () {
+            var self = et.vc;
+            var checked = allCheckBox.prop("checked");
+
+            // 모든 체크 박스 상태를 반대로 바꾼다. (에러)
+            // $(".ckb").prop("checked", (i, val) => {
+            //     val = !!checked;
+            // });
+
+
+            if (checked) {
+                $("input:checkbox").prop("checked", true);
+            }
+            else {
+                $("input:checkbox").prop("checked", false);
+            }
+        }
+
+        ctrl.singleCheckBoxClickHandler = function () {
+            alert('1');
+            var self = et.vc;
+            // 이미 전체 선택이 되어 있는 경우
+            var checked = allCheckBox.prop("checked");
+            console.info("checked", checked);
+            // 전체 선택이 된 경우, 하나를 클릭하면
+            // 전체선택된 체크박스를 해제한다.
+            if (checked) {
+                allCheckBox.prop("checked", false);
+            }
+            // 모든 박스가 다 채워져 있다면, 전체선택 박스를 활성화 시킨다.
+
+
+        }
         // ============================== 이벤트 리스너 ==============================
         ctrl.btnSearchHandler = function () {
             var self = et.vc;
@@ -89,9 +128,8 @@
 
             param.emp_name = $("#iptSearch").val();
             param.position = $("#selPosition").val();
-            // debugger;
-            self.createDateTables(param);
 
+            self.createDateTables(param);
         }
         // ============================== DataTables 생성, 이벤트들 ==============================
 
@@ -122,9 +160,11 @@
             option.paging = false;
 
             $("#tbList").DataTable(option);
+
         }
 
         ctrl.dataTableCallback = function (settings) {
+            var self = et.vc;
 
         }
 
