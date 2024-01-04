@@ -42,11 +42,10 @@
             allCheckBoxSelector.click(self.checkBoxClickHandler);
 
             // 개별 체크박스 이벤트 핸들러
-            $("#tbList tbody").on("change", "input:checkbox", ctrl.singleCheckBoxHandler);
+            $("#tbList tbody").on("change", ctrl.singleCheckBoxHandler);
 
             et.setDataTableRowSelection("#tbList", self.rowSelectionHandler);
         };
-
 
 
         ctrl.rowSelectionHandler = function ($target, row, col, columnVisible) {
@@ -55,8 +54,7 @@
 
             }
             else {
-                var rowData = et.getRowData("#tbList", $target.closest("tr"));
-                console.log('rowData', rowData);
+                const rowData = et.getRowData("#tbList", $target.closest("tr"));
                 debugger;
                 ETService().callView("/emp/update", rowData);
             }
@@ -74,7 +72,6 @@
                 }
 
                 et.makeSelectOption(empList, options, "#selPosition", "전체");
-
             }
             // 아무런 데이터도 받아오지 않은 경우
             else {
@@ -94,8 +91,6 @@
             // $(".ckb").prop("checked", (i, val) => {
             //     val = !!checked;
             // });
-
-
             if (checked) {
                 $("input:checkbox").prop("checked", true);
             }
@@ -115,15 +110,15 @@
             self.createDateTables(param);
         }
 
-
         ctrl.singleCheckBoxHandler = function () {
-            var allChecked = true;
+            var allChecked = true; // 전체 선택 여부
             $("#tbList tbody input:checkbox").each(function () {
                 if (!$(this).prop("checked")) {
                     allChecked = false;
                     return false; // 체크되지 않은 체크박스가 있으면 반복 중지
                 }
             });
+            // 모두 체크가 되어있는 경우, 전체 선택 체크박스 활성화
             $("#cbAllClick").prop("checked", allChecked);
         }
         // ============================== DataTables 생성, 이벤트들 ==============================

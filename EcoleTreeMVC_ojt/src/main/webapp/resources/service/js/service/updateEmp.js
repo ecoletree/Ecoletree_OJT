@@ -32,8 +32,13 @@
          */
         ctrl.init = function (initData) {
             var self = et.vc;
-            // 화면에 뿌려주기
+
+            ctrl.initData = initData;
+
+            // 화면에 받아온 데이터 출력
             showEmployeeData(initData);
+
+            // 수정 버튼 이벤트 핸들러
             $("#btnEdit").click(self.btnEditHandler);
         };
 
@@ -42,7 +47,6 @@
 
             const rowData = data.rowData; // 클릭한 row 데이터
             const orgData = data.codeList; // 전체 원본 배열 데이터
-            console.log(data);
 
             $("input[name='emp_num']").val(rowData.emp_num);
             $("input[name='emp_name']").val(rowData.emp_name);
@@ -57,15 +61,6 @@
             $("input[name='emc_contact_point']").val(rowData.emc_contact_point);
             $("input[name='emc_phone_num']").val(rowData.emc_phone_num);
 
-            /*
-            * 문제점 1.
-            * (1) 직급 관련한 데이터를 불러오지 않는데, 하드 코딩으로 직접 넣어주는게 맞나?
-            * (2) 혹은 rowData 받아올 때 직급 데이터를 param 으로 콜백함수에 전달해서 써야하나?
-            * */
-
-
-            // const positionList = ['사원', '인턴'];
-
             var options = {
                 value: "code_cd",
                 text : "code_name"
@@ -79,67 +74,88 @@
 
         // ============================== 이벤트 리스너 ==============================
         ctrl.btnEditHandler = function () {
+            var self = et.vc;
+            const empNum = $("input[name='emp_num']");
+            const empName = $("input[name='emp_name']");
+            const empEngname = $("input[name='emp_engname']");
+            const department = $("input[name='department']");
+            const position = $("input[name='position']");
+            const email1 = $("input[name='email_1']");
+            const email2 = $("input[name='email_2']");
+            const birthday = $("input[name='birthday']");
+            const address = $("input[name='address']");
+            const phoneNum = $("input[name='phone_num']");
+
+            console.log(self.initData);
 
             /*
             * 유효성 검사
             * 1. 빈칸 체크 (O)
-            * 2. 이전 값과 동일한지 체크 (X)
-            * 3. 데이터베이스의 제약 조건 부합하는지 체크 (X)
+            * 2. 이전 값과 동일한지 체크 (X) -> 동일한지 제약을 걸 필요가 없음
+            * 3. 데이터베이스의 제약 조건 부합하는지 체크 (X) -> 길이, 정규식 체크, 빈칸체크 등등
             * */
             let isValid = false;
 
-            if ($("input[name='emp_num']").val() === "") {
-                alert('사번이 빈칸일 수 없습니다.');
-                return false;
-            }
-            if ($("input[name='emp_name']").val() === "") {
+            if (empName.val() === "") {
                 alert('이름이 빈칸일 수 없습니다.');
+                empName.val(self.initData.rowData.emp_name); // 원본 데이터 다시 입력
                 return false;
             }
 
-            if ($("input[name='emp_engname']").val() === "") {
-                alert('영문 이름이 빈칸일 수 없습니다.');
-                return false;
-            }
-            if ($("input[name='department']").val() === "") {
+            // if ($("input[name='emp_engname']").val() === "") {
+            //     alert('영문 이름이 빈칸일 수 없습니다.');
+            //     return false;
+            // }
+            if (department.val() === "") {
                 alert('부서가 빈칸일 수 없습니다.');
+                department.val(self.initData.rowData.department);
                 return false;
             }
 
-            if ($("input[name='phone_num']").val() === "") {
+            if (phoneNum.val() === "") {
                 alert('전화번호가 빈칸일 수 없습니다.');
+                phoneNum.val(self.initData.rowData.phone_num);
                 return false;
             }
 
-            if ($("input[name='email_1']").val() === "") {
+            if (email1.val() === "") {
                 alert('메일 주소가 빈칸일 수 없습니다.');
+                email1.val(self.initData.rowData.email_1);
                 return false;
             }
 
-            if ($("input[name='birthday']").val() === "") {
-                alert('생년월일이 빈칸일 수 없습니다.');
-                return false;
-            }
-            if ($("input[name='address']").val() === "") {
-                alert('주소가 빈칸일 수 없습니다.');
-                return false;
-            }
-            if ($("input[name='emc_contact_point']").val() === "" ||
-                $("input[name='emc_phone_num']").val() === "") {
-                alert('긴급 연락망이 빈칸일 수 없습니다.');
-                return false;
-            }
+            // if ($("input[name='birthday']").val() === "") {
+            //     alert('생년월일이 빈칸일 수 없습니다.');
+            //     return false;
+            // }
+            // if ($("input[name='address']").val() === "") {
+            //     alert('주소가 빈칸일 수 없습니다.');
+            //     return false;
+            // }
+            // if ($("input[name='emc_contact_point']").val() === "" ||
+            //     $("input[name='emc_phone_num']").val() === "") {
+            //     alert('긴급 연락망이 빈칸일 수 없습니다.');
+            //     return false;
+            // }
+
+
             // 여기까지 왔으면 유효성 검사 통과
             isValid = true;
 
+            // const form0 = $("#editForm");
+            // const form1 = $("#editForm").serializeArray();
+
+            const form2 = $("#editForm")[0];
+            const formData = new FormData(form2);
+            // validateUtil.js
+            // default 값이 있는 인자는 생략
+            // 아직 Controller 랑 통신하는 이 파트 잘 모르겠음
+            const validator = new ETValidate("#editForm", "/");
+            console.log(validator);
             // 2. form 제출
             // 유효성 검사를 다 통과한 경우에만 form 을 제출한다.
             if (!isValid) {
-                const formData = new FormData($("#editForm")[0]);
 
-                $.ajax({
-
-                })
             }
         }
         // ============================== DataTables 생성, 이벤트들 ==============================
@@ -148,9 +164,10 @@
         // ============================== Form 리스너 ==============================
         $("#editForm").submit(function (e) {
             var self = et.vc;
+
+
+
             e.preventDefault();
-
-
         })
 
 
