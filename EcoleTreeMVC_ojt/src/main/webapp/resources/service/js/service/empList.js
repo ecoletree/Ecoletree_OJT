@@ -30,11 +30,10 @@
 	 */
 	ctrl.init = function(initData) {
 		var self = et.vc;
-		console.log("test");
-		
 		ETService().setSuccessFunction(self.codeSuccessResultFunction).callService(self.path + "/code", {});
 		$("#btnSearch").click(self.btnSearchHandler);
-		$("#cbAllClick").click(self.checkboxHandler);
+		//$("#cbAllClick").click(self.checkboxHandler);
+		$("#cbAllClick").change(self.checkboxHandler);
 		et.setDataTableRowSelection("#tbList", self.rowClickHandler);
 
 	};
@@ -94,19 +93,17 @@
 			var rowData = et.getRowData("#tbList", $target.closest("tr"));
 			ETService().callView("/emp/update", rowData);
 			console.log('rowData', rowData);
-			debugger;
 		}
 	}
 	
-	ctrl.checkboxHandler = function checkAll(){
-		var check = document.getElementsByName('checkBox');
- 	    if(document.getElementById("cbAllClick").checked==true){  //id 를 사용하여 하나의 객체만을 호출
-           for(var i=0;i<check.length;i++) document.getElementsByName("checkBox")[i].checked=true;   //name 을 사용하여 배열 형태로 담아 호출
-        }
-        if(document.getElementById("cbAllClick").checked==false){
-           for(var i=0;i<check.length;i++) document.getElementsByName("checkBox")[i].checked=false;  
-        }
+	ctrl.checkboxHandler = function() {
+	    var checkAll = $("#cbAllClick");
+	    var checkboxes = $("input[name='checkBox']");
+	    
+	    checkboxes.prop('checked', checkAll.prop('checked'));
 	}
+	
+	
 	// ============================== Form 리스너 ==============================
 
 	
