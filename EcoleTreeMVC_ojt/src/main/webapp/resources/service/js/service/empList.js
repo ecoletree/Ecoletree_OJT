@@ -22,12 +22,12 @@
 
         var ctrl = {};
 
+        var checkedBoxCount = 0;
+
         ctrl.name = "empList";
         ctrl.path = "/sample";
 
-        var allCheckBox = $("#cbAllClick");
-
-
+        var allCheckBoxSelector = $("#cbAllClick");
         // ============================== 화면 컨트롤 ==============================
         /**
          * init VIEW
@@ -39,16 +39,14 @@
             $("#btnSearch").click(self.btnSearchHandler);
 
             // 체크박스 전체 선택 이벤트 핸들러
-            allCheckBox.click(self.checkBoxClickHandler);
+            allCheckBoxSelector.click(self.checkBoxClickHandler);
 
-
-
-            // 체크박스 1개 클릭 이벤트
-            const checkBoxes = $("input.ckb:checkbox")
-            checkBoxes.click(self.singleCheckBoxClickHandler);
+            // 개별 체크박스 이벤트 핸들러
+            $("#tbList tbody").on("change", "input:checkbox", ctrl.singleCheckBoxHandler);
 
             et.setDataTableRowSelection("#tbList", self.rowSelectionHandler);
         };
+
 
 
         ctrl.rowSelectionHandler = function ($target, row, col, columnVisible) {
@@ -90,7 +88,7 @@
 
         ctrl.checkBoxClickHandler = function () {
             var self = et.vc;
-            var checked = allCheckBox.prop("checked");
+            var checked = allCheckBoxSelector.prop("checked");
 
             // 모든 체크 박스 상태를 반대로 바꾼다. (에러)
             // $(".ckb").prop("checked", (i, val) => {
@@ -106,21 +104,6 @@
             }
         }
 
-        ctrl.singleCheckBoxClickHandler = function () {
-            alert('1');
-            var self = et.vc;
-            // 이미 전체 선택이 되어 있는 경우
-            var checked = allCheckBox.prop("checked");
-            console.info("checked", checked);
-            // 전체 선택이 된 경우, 하나를 클릭하면
-            // 전체선택된 체크박스를 해제한다.
-            if (checked) {
-                allCheckBox.prop("checked", false);
-            }
-            // 모든 박스가 다 채워져 있다면, 전체선택 박스를 활성화 시킨다.
-
-
-        }
         // ============================== 이벤트 리스너 ==============================
         ctrl.btnSearchHandler = function () {
             var self = et.vc;
@@ -131,6 +114,18 @@
 
             self.createDateTables(param);
         }
+
+
+        ctrl.singleCheckBoxHandler = function () {
+            var allChecked = true;
+            $("#tbList tbody input:checkbox").each(function () {
+                if (!$(this).prop("checked")) {
+                    allChecked = false;
+                    return false; // 체크되지 않은 체크박스가 있으면 반복 중지
+                }
+            });
+            $("#cbAllClick").prop("checked", allChecked);
+        }
         // ============================== DataTables 생성, 이벤트들 ==============================
 
         ctrl.createDateTables = function (params) {
@@ -138,7 +133,7 @@
             const columns = [
                 {
                     data: "", render: function (data, type, row, meta) {
-                        return '<input type="checkbox" class="ckb">'
+                        return '<input type="checkbox">'
                     }
                 },
                 {data: "emp_num"},
