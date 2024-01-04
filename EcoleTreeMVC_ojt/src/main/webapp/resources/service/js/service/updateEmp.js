@@ -31,27 +31,49 @@
 
 	ctrl.init = function(initData) {
 		var self = et.vc;
-		console.log("test");
-		
-		ETService().setSuccessFunction(self.codeSuccessResultFunction).callService(self.path + "/code", {});
-		
-	};
+		showEmployeeData(initData);
+		$("#btnEdit").click(self.btnEditHandler);
+	};	
 	
-	ctrl.codeSuccessResultFunction = function(result) {
-	    var self = et.vc;
-        var codeList = result.data;
-	    console.log(codeList);
-	    debugger;    
-	   
+	function showEmployeeData(data){
+		var self = et.vc;
+		const employeeData = data.rowData;
+		const employeeList = data.codeList;		
+		var employeePositionName = employeeData.position_name;
+		
+		$("input[name='emp_num']").val(employeeData.emp_num);
+		$("input[name='emp_name']").val(employeeData.emp_name);
+		$("input[name='emp_engname']").val(employeeData.emp_engname);
+		$("input[name='department']").val(employeeData.department);
+		
+		et.makeSelectOption(employeeList, {value: "code_cd", text: "code_name"}, "#selPosition", employeePositionName);
+		
+		$("input[name='email_1']").val(employeeData.email_1);
+		$("input[name='email_2']").val(employeeData.email_2);
+		$("input[name='phone_num']").val(employeeData.phone_num);
+		$("input[name='birthday']").val(employeeData.birthday);
+		$("input[name='address']").val(employeeData.address);
+		
+		$("input[name='emc_contact_point']").val(employeeData.emc_contact_point);
+		$("input[name='emc_phone_num']").val(employeeData.emc_phone_num);
+		
 	}
+	
+	
+	
 	// ============================== 동작 컨트롤 ==============================
 
 	// ============================== 이벤트 리스너 ==============================
+	ctrl.btnEditHandler = function(){
+		var self = et.vc;
+		$("#editForm").submit();
+		//ETService().fileUploadWithForm(self.path + "/update", editForm);
+		
+	}
 	
 	// ============================== DataTables 생성, 이벤트들 ==============================
 
 	// ============================== Form 리스너 ==============================
 
-	
 	return ctrl;
 }));
