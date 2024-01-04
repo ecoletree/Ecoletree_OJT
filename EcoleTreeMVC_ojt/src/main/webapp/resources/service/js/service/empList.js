@@ -1,8 +1,8 @@
 /*******************************************************************************
  * Copyright (c) 2017 Ecoletree. All Rights Reserved.
  * 
- * @Author : kkh
- * @CreateDate : 2023. 12. 06.
+ * @Author : jjy
+ * @CreateDate : 2024. 1. 04.
  * @DESC : script sample
  ******************************************************************************/
 (function(et, ctrl) {
@@ -30,15 +30,33 @@
 	 */
 	ctrl.init = function(initData) {
 		var self = et.vc;
-		console.log("test");
 		ETService().setSuccessFunction(self.codeSuccessResultFunction).callService(self.path + "/code", {});
 		$("#btnSearch").click(self.btnSearchHandler);
 		et.setDataTableRowSelection("#tbList", self.rowClickHandler);
+		
+		$(document).ready(function() {
+    
+    		$("#cbAllClick").click(function() {
+        	var checked = $(this).prop("checked");
+        	$("input:checkbox").prop("checked", checked);
+    			});
+
+    		$("#tbList tbody").on("change", "input:checkbox", function() {
+        	var allChecked = true;
+        	$("#tbList tbody input:checkbox").each(function() {
+            	if (!$(this).prop("checked")) {
+                allChecked = false;
+                return false;
+            		}
+        		});
+        	$("#cbAllClick").prop("checked", allChecked);
+    		});
+		});
+
 	};
 	
 	ctrl.codeSuccessResultFunction = function(result){
 		var self = et.vc;
-		console.log(result);
 		var codeList = result.data;
 		et.makeSelectOption(codeList, {value:"code_cd", text:"code_name"}, "#selPosition", "전체");
 	}
@@ -52,10 +70,11 @@
 		param.emp_name = $("#iptSearch").val();
 		param.position = $("#selPosition").val();
 		
-		console.log(param);
 		self.createDataTables(param);
 		
-	}
+		}
+
+
 	
 	// ============================== DataTables 생성, 이벤트들 ==============================
 	
@@ -90,6 +109,7 @@
 			var rowData = et.getRowData("#tbList", $target.closest("tr"));
 			
 			ETService().callView("/emp/update", rowData);
+		
 			
 		}
 	}
