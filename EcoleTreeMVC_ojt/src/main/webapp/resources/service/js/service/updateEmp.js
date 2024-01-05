@@ -30,6 +30,7 @@
 	 */
 	ctrl.init = function(initData) {
 		var self = et.vc;
+		
 		var codeList = initData.codeList;
 		var rowData = initData.rowData;
 	
@@ -38,8 +39,10 @@
 		self.setFormData("#editForm",rowData);
 		
 		// validation setting 
+		self.setValidaion();
 		
 		// btnEdit click function
+		$("#btnEdit").click(self.btnEditClickHanlder);
 		
 	};
 	
@@ -62,7 +65,6 @@
 				$(element).val(rowData[name]=== undefined? "":rowData[name]);
 			}
 			
-			
 		}); //form each
 
 		// trigger;
@@ -78,7 +80,10 @@
 	/**
 	 * 버튼 클릭 핸들러 ---> submit
 	 */
-	
+	ctrl.btnEditClickHanlder = function(){
+		var self = et.vc;
+		$("edtiForm").submit();
+	}
 
 	// ============================== Form 리스너 ==============================
 	
@@ -87,16 +92,40 @@
 	 * https://github.com/jquery-validation/jquery-validation 기조로 생성
 	 * ecoletreeLibraryJS 에 validationUtil.js 로 저장되어 있음
 	 */
+	 ctrl.setValidaion = function(){
+		var self = et.vc;
+		
+		//만들어서 쓸때 
+		ETValidate.addMethod("fourNumber",function(value, element, params) {
+			return value.length > 5;
+		});	
+		
+		var editValidation = ETValidate().setSubmitHandler(self.editSubmitHandler).setShowErrors(et.setErrorFunction());
+		editValidation.validateRules("emp_name",editValidation.REQUIRED,"이름은 필수입니다."); 
+		editValidation.apply();
+		
+	}
 
 
 	/**	
 	 * 제출 콜백 핸들러 convert form to Object
 	 */
-	 
+	 ctrl.editSubmitHandler = function(form){
+		var self = et.vc;
+		var formData = ETValidate.convertFormToObject(form,true,true);
+		console.log("데이터 형태 확인:"+formdata);
+//		new ETService().setSuccessFunction(self.editSubmitSuccessHandler).callService(self.path+"/delete", formData);
+		
+	}
 	/**	
 	 * 제출 후 response 콜백 핸들러 
 	 */
-	 
+	 ctrl.editSubmitSuccessHandler = function(result){
+		var self = et.vc;
+		if(result.message ==="success"){
+		
+		}
+	}
 	 
 	
 	return ctrl;

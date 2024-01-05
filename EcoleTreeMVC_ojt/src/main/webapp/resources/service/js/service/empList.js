@@ -66,7 +66,6 @@
 		var params = {};
 		params.emp_name = $("#iptSearch").val();
 		params.position = $("#selPosition").val();
-		debugger;
 		self.createDataTables(params);
 	}
 	
