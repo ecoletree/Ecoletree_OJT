@@ -22,62 +22,81 @@
 
         var ctrl = {};
 
-        var checkedBoxCount = 0;
-
         ctrl.name = "empList";
         ctrl.path = "/sample";
 
-        var allCheckBoxSelector = $("#cbAllClick");
         // ============================== 화면 컨트롤 ==============================
         /**
          * init VIEW
          */
         ctrl.init = function (initData) {
-            var self = et.vc;
-            ETService().setSuccessFunction(self.resultFunction).callService(self.path + "/code", {});
 
+            var self = et.vc;
+
+            ETService()
+                // if successed, do something
+                .setSuccessFunction(self.resultFunction)
+                // if failed, do something
+                .setErrorFunction(self.errorFunction)
+                // request data from '/sample/code'
+                // note: why order is important here?
+                .callService(self.path + "/code", {});
+
+
+
+            // search button event handler
             $("#btnSearch").click(self.btnSearchHandler);
 
-            // 체크박스 전체 선택 이벤트 핸들러
-            allCheckBoxSelector.click(self.checkBoxClickHandler);
+            // check all event handler
+            $("#cbAllClick").click(self.checkBoxClickHandler);
 
-            // 개별 체크박스 이벤트 핸들러
-            $("#tbList tbody").on("change", ctrl.singleCheckBoxHandler);
+            // indivisual check box event handler
+            $("#tbList tbody").on("change", "input:checkbox", ctrl.singleCheckBoxHandler);
 
+            // delete button event handler
+            $("#btnDelete").click(self.deleteBtnHandler);
+
+            // row select event handler
             et.setDataTableRowSelection("#tbList", self.rowSelectionHandler);
         };
 
-
         ctrl.rowSelectionHandler = function ($target, row, col, columnVisible) {
             var self = et.vc;
-            if (col === 0 || col === undefined) {
 
-            }
-            else {
-                const rowData = et.getRowData("#tbList", $target.closest("tr"));
-                debugger;
+            if (col !== 0 && col !== undefined) {
+                // data we need to pass to corresponding page
+                let rowData = et.getRowData("#tbList", $target.closest("tr"));
+                // using pre-defined callback function
                 ETService().callView("/emp/update", rowData);
             }
         }
 
         ctrl.resultFunction = function (result) {
             var self = et.vc;
-            var empList = null;
+            let empList = null;
+            // when HTTP response status is 200 (OK)
             if (result.message === "success") {
-                empList = result.data;
+                empList = result.data; // hold fetched data from '/sample/code'
 
-                var options = {
+                let options = {
                     value: "code_cd",
                     text : "code_name"
                 }
 
                 et.makeSelectOption(empList, options, "#selPosition", "전체");
             }
-            // 아무런 데이터도 받아오지 않은 경우
+            // when error,
             else {
                 // TBD
             }
+        }
 
+
+        /*
+         * when error, how to display the error message?
+         * */
+        ctrl.errorFunction = function () {
+            var self = et.vc;
 
         }
 
@@ -85,24 +104,23 @@
 
         ctrl.checkBoxClickHandler = function () {
             var self = et.vc;
-            var checked = allCheckBoxSelector.prop("checked");
+            let checked = $("#cbAllClick").prop("checked");
 
-            // 모든 체크 박스 상태를 반대로 바꾼다. (에러)
-            // $(".ckb").prop("checked", (i, val) => {
-            //     val = !!checked;
-            // });
             if (checked) {
                 $("input:checkbox").prop("checked", true);
             }
             else {
                 $("input:checkbox").prop("checked", false);
             }
+
         }
 
         // ============================== 이벤트 리스너 ==============================
+
         ctrl.btnSearchHandler = function () {
             var self = et.vc;
-            var param = {};
+
+            let param = {};
 
             param.emp_name = $("#iptSearch").val();
             param.position = $("#selPosition").val();
@@ -111,22 +129,46 @@
         }
 
         ctrl.singleCheckBoxHandler = function () {
-            var allChecked = true; // 전체 선택 여부
-            $("#tbList tbody input:checkbox").each(function () {
-                if (!$(this).prop("checked")) {
-                    allChecked = false;
-                    return false; // 체크되지 않은 체크박스가 있으면 반복 중지
-                }
+            // all checkboxes
+            let checks = $("input:checkbox:not(#cbAllClick)");
+            // checked checkboxes among all checkboxes
+            let checked = $("input:checkbox:not(#cbAllClick):checked");
+
+            // all check box is checked
+            if (checks.length === checked.length) {
+                $("#cbAllClick").prop("checked", true);
+            }
+            // not all check box is checked
+            else {
+                $("#cbAllClick").prop("checked", false);
+            }
+        }
+
+        ctrl.deleteBtnHandler = function () {
+            var self = et.vc;
+            // store the element which should be deleted
+            let del = [];
+            // get the data from the row which check box is checked
+            $("#tbList tbody input:checkbox:checked").each(function () {
+                del.push(et.getRowData("#tbList", this.closest("tr")));
             });
-            // 모두 체크가 되어있는 경우, 전체 선택 체크박스 활성화
-            $("#cbAllClick").prop("checked", allChecked);
+            // PENDING: remove the checked row data from the screen
+            console.log("======== 삭제 대상 콘솔 출력 ========");
+            del.forEach((v, i) => {
+                console.log(v);
+            })
+
         }
         // ============================== DataTables 생성, 이벤트들 ==============================
 
-        ctrl.createDateTables = function (params) {
+        /**
+         * @param {object} searchParams search parameters
+         * */
+        ctrl.createDateTables = function (searchParams) {
             var self = et.vc;
-            const columns = [
+            let columns = [
                 {
+                    // render is from library
                     data: "", render: function (data, type, row, meta) {
                         return '<input type="checkbox">'
                     }
@@ -140,17 +182,17 @@
                 {data: "birthday"}
             ];
 
-            const option = et.createDataTableSettings(
+            let option = et.createDataTableSettings(
                 columns,
                 self.path + "/list",
-                params,
+                searchParams,
                 self.dataTableCallback
             )
 
+            // temporary disable paging option
             option.paging = false;
 
             $("#tbList").DataTable(option);
-
         }
 
         ctrl.dataTableCallback = function (settings) {
