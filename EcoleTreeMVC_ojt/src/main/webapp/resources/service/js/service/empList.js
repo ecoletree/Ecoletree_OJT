@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (c) 2017 Ecoletree. All Rights Reserved.
  * 
- * @Author : kkh
+ * @Author : jsw
  * @CreateDate : 2023. 12. 06.
  * @DESC : script sample
  ******************************************************************************/
@@ -32,8 +32,8 @@
 		var self = et.vc;
 		ETService().setSuccessFunction(self.codeSuccessResultFunction).callService(self.path + "/code", {});
 		$("#btnSearch").click(self.btnSearchHandler);
-		//$("#cbAllClick").click(self.checkboxHandler);
 		$("#cbAllClick").change(self.checkboxHandler);
+		$("#btnDelete").click(self.btnDeleteHandler);
 		et.setDataTableRowSelection("#tbList", self.rowClickHandler);
 
 	};
@@ -92,7 +92,6 @@
 		else{
 			var rowData = et.getRowData("#tbList", $target.closest("tr"));
 			ETService().callView("/emp/update", rowData);
-			console.log('rowData', rowData);
 		}
 	}
 	
@@ -103,7 +102,13 @@
 	    checkboxes.prop('checked', checkAll.prop('checked'));
 	}
 	
-	
+	ctrl.btnDeleteHandler = function($target){
+		var checkboxes = $("input[type='checkbox']")
+		var result = {};
+		$.each(checkboxes, function(index, value){
+			console.log(et.getRowData("#tbList", index));
+		})
+	}
 	// ============================== Form 리스너 ==============================
 
 	
