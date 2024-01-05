@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (c) 2017 Ecoletree. All Rights Reserved.
  * 
- * @Author : kkh
+ * @Author : jsw
  * @CreateDate : 2023. 12. 06.
  * @DESC : script sample
  ******************************************************************************/
@@ -31,45 +31,36 @@
 
 	ctrl.init = function(initData) {
 		var self = et.vc;
-		showEmployeeData(initData);
-		$("#btnEdit").click(self.btnEditHandler);
-	};	
-	
-	function showEmployeeData(data){
+		var codeList = initData.codeList;
+		var rowData = initData.rowData;
+		et.makeSelectOption(codeList, {value:"code_cd", text:"code_name"}, "#selPosition", "전체");
+		self.setInputView("#editForm",rowData);
+	};
+
+	ctrl.setInputView = function(formId,rowData){
 		var self = et.vc;
-		const employeeData = data.rowData;
-		const employeeList = data.codeList;		
-		var employeePositionName = employeeData.position_name;
-		
-		$("input[name='emp_num']").val(employeeData.emp_num);
-		$("input[name='emp_name']").val(employeeData.emp_name);
-		$("input[name='emp_engname']").val(employeeData.emp_engname);
-		$("input[name='department']").val(employeeData.department);
-		
-		et.makeSelectOption(employeeList, {value: "code_cd", text: "code_name"}, "#selPosition", employeePositionName);
-		
-		$("input[name='email_1']").val(employeeData.email_1);
-		$("input[name='email_2']").val(employeeData.email_2);
-		$("input[name='phone_num']").val(employeeData.phone_num);
-		$("input[name='birthday']").val(employeeData.birthday);
-		$("input[name='address']").val(employeeData.address);
-		
-		$("input[name='emc_contact_point']").val(employeeData.emc_contact_point);
-		$("input[name='emc_phone_num']").val(employeeData.emc_phone_num);
-		
+		var triggerElement = []; //form의 각 요소를 담아두는 배열 나중에 트리거로 뽑아서 입력하기 위함
+		$(formId).find("input,select").each(function(index,element){
+			var name = $(element).prop("name"); //element -> ex) <input type="text name="department"> name -> department 
+			if($(element).prop("localName") === "select"){ //localName -> ex)input, select
+				if(rowData[name] === undefined){
+					$(element).children("option:eq(0)").prop("selected",true);
+				}
+			}
+			triggerElement.push(element); //input, select의 element 배열에 저장
+		});
+
+		$.each(triggerElement,function(index,elemt){
+			var name = $(elemt).prop("name");
+			$(elemt).val(rowData[name]).trigger("change"); //element마다 해당 값 넣어주기 트리거
+		});		
 	}
-	
 	
 	
 	// ============================== 동작 컨트롤 ==============================
 
 	// ============================== 이벤트 리스너 ==============================
-	ctrl.btnEditHandler = function(){
-		var self = et.vc;
-		$("#editForm").submit();
-		//ETService().fileUploadWithForm(self.path + "/update", editForm);
-		
-	}
+
 	
 	// ============================== DataTables 생성, 이벤트들 ==============================
 
