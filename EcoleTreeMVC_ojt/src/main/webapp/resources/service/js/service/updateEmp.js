@@ -28,19 +28,25 @@
 	/**
 	 * init VIEW
 	 */
-	/**
-	 */
 	ctrl.init = function(initData) {
 		var self = et.vc;
 		var codeList = initData.codeList;
 		var rowData = initData.rowData;
 	
-		self.setInputView("#editForm",rowData);
-		
 		et.makeSelectOption(codeList, {value:"code_cd", text:"code_name"}, "#selPosition", "전체");
+		
+		self.setFormData("#editForm",rowData);
+		
+		// validation setting 
+		
+		// btnEdit click function
+		
 	};
-
-	ctrl.setInputView = function(formId,rowData){
+	
+	/**
+	 * 수정화면일때 기존 데이터가 폼에 셋팅 
+	 */
+	ctrl.setFormData = function(formId,rowData){
 		var self = et.vc;
 		var triggerElement = [];
 		$(formId).find("input,select").each(function(index,element){
@@ -66,15 +72,32 @@
 			}
 		});		
 	}
-	// ============================== 동작 컨트롤 ==============================
 
 	// ============================== 이벤트 리스너 ==============================
 	
+	/**
+	 * 버튼 클릭 핸들러 ---> submit
+	 */
 	
-	// ============================== DataTables 생성, 이벤트들 ==============================
 
 	// ============================== Form 리스너 ==============================
+	
+	/**
+	 * 폼 밸리데이터 셋팅 (빨간색 * 표시 있는 항목들 모두 등록) 
+	 * https://github.com/jquery-validation/jquery-validation 기조로 생성
+	 * ecoletreeLibraryJS 에 validationUtil.js 로 저장되어 있음
+	 */
 
+
+	/**	
+	 * 제출 콜백 핸들러 convert form to Object
+	 */
+	 
+	/**	
+	 * 제출 후 response 콜백 핸들러 
+	 */
+	 
+	 
 	
 	return ctrl;
 }));
