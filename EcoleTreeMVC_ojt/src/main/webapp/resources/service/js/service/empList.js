@@ -30,7 +30,7 @@
 	 */
 	ctrl.init = function(initData) {
 		var self = et.vc;
-		ETService().setSuccessFunction(self.codeSuccessResultFunction).callService(self.path + "/code", {});
+		new ETService().setSuccessFunction(self.codeSuccessResultFunction).callService(self.path + "/code", {});
 		$("#btnSearch").click(self.btnSearchHandler);
 		$("#cbAllClick").change(self.checkboxHandler);
 		$("#btnDelete").click(self.btnDeleteHandler);
@@ -103,14 +103,20 @@
 	}
 	
 	ctrl.btnDeleteHandler = function($target){
-		var checkboxes = $("input[type='checkbox']")
+		var checkboxes = $("input[type='checkbox']:checked")
 		var result = {};
 		$.each(checkboxes, function(index, value){
-			console.log(et.getRowData("#tbList", index));
+			result.push(et.getRowData("#tbList", $(value).closest("tr")));
+			
 		})
+		if(result.length === 0){
+			alert('삭제할 데이터를 선택해주세요.');
+		}
+		else{
+			console.log(result);
+		}
 	}
 	// ============================== Form 리스너 ==============================
-
 	
 	return ctrl;
 }));
