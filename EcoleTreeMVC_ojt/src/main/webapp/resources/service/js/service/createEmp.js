@@ -2,12 +2,12 @@
  * Copyright (c) 2017 Ecoletree. All Rights Reserved.
  * 
  * @Author : jjy
- * @CreateDate : 2024. 1. 04.
- * @DESC : script sample
+ * @CreateDate : 2024. 01. 08.
+ * @DESC : 사원 생성
  ******************************************************************************/
 (function(et, ctrl) {
 	if (_.isObject(et) && et.name === ETCONST.PROJECT_NAME) {
-		if (!et.vc || et.vc.name !== "updateEmp") {
+		if (!et.vc || et.vc.name !== "createEmp") {
 			et.vc= ctrl(et);
 		}
 		
@@ -20,9 +20,8 @@
 	
 	var ctrl = {};
 	
-	ctrl.name = "updateEmp";
+	ctrl.name = "createEmp";
 	ctrl.path = "/sample";
-
 	
 	// ============================== 화면 컨트롤 ==============================
 	/**
@@ -30,62 +29,32 @@
 	 */
 	ctrl.init = function(initData) {
 		var self = et.vc;
-		var codeList = initData.codeList;
-		var data = initData.rowData;
-		
-		et.makeSelectOption(codeList, {value:"code_cd", text:"code_name"}, "#selPosition", "전체");
-		
-		self.setFormData("#editForm", data);
+		ETService().setSuccessFunction(self.codeSuccessResultFunction).callService(self.path + "/code", {});
 		self.setValidation();
-		
-		
-		$("#btnEdit").click(self.btnEditClickHanlder);
-		
-	}
-	
-	ctrl.setFormData = function(formId, rowData){
-		var self = et.vc;
-		var elementTrigger = [];
-		$(formId).find("input,select").each(function(index,element){
-			var name = $(element).prop("name");
-			
-			if($(element).prop("localName") === "select"){
-				if(rowData[name] === undefined){
-				$(element).children("option:eq(0)").prop("selected",true);
-				}else{
-					$(element).val(rowData[name]);
-					elementTrigger.push($(element));
-				}				
-				
-			}else{
-				$(element).val(rowData[name] === undefined? "":rowData[name])		
-			}
-			
-		});
-		
-		$.each(elementTrigger,function(index,elemt){
-			if ($(elemt).prop("localName") === "select") {
-				$(elemt).trigger("change");
-			}
-		});	
-		
+		$("#btnAdd").click(self.btnCreateClickHandler);
+	};
+
+	/**
+	 * codeList 값 호출
+	 */
+	ctrl.codeSuccessResultFunction = function(result) {
+	    var self = et.vc;
+	    if (result.message === "success") {
+	        var codeList = result.data;
+	        et.makeSelectOption(codeList, {value: "code_cd", text: "code_name"}, "#selPosition", "전체");
+	    }
 	}
 
 	// ============================== 동작 컨트롤 ==============================
-
 	// ============================== 이벤트 리스너 ==============================
-	
 	/**
-	 * 수정 버튼 클릭 핸들러
+	 * 생성 버튼 클릭 핸들러
 	 */
-	ctrl.btnEditClickHanlder = function(){
+	ctrl.btnCreateClickHandler = function(){
 		var self = et.vc;
-		$("#editForm").submit();
+		$("#addForm").submit();
 	}
-
-	
 	// ============================== DataTables 생성, 이벤트들 ==============================
-
 	// ============================== Form 리스너 ==============================
 	
 	/**
@@ -93,6 +62,7 @@
 	 */
 	ctrl.setValidation = function(){
 		var self = et.vc;
+		var editValidation = new ETValidate("addForm").setSubmitHandler(self.createSubmitHandler).setShowErrors(et.setErrorFunction());
 		
 		//전화번호 유효성 검사(3자리 - 3or4자리 - 4자리), 빈값은 허용
 		ETValidate.addMethod("validPhoneNumber", function(value, element, params) {
@@ -112,7 +82,6 @@
 			return birthDayPattern.test(value);
 		});
 		
-		var editValidation = new ETValidate("editForm").setSubmitHandler(self.editSubmitHandler).setShowErrors(et.setErrorFunction());
 		editValidation.validateRules("emp_name", editValidation.REQUIRED, "이름은 필수입니다.");
 		editValidation.validateRules("department", editValidation.REQUIRED, "부서는 필수입니다.");
 		editValidation.validateRules("position", editValidation.REQUIRED, "직급은 필수입니다.");
@@ -123,38 +92,27 @@
 		editValidation.validateRules("phone_num", "validPhoneNumber", "전화번호 형식은 XXX-XXXX-XXXX입니다.");
 		editValidation.validateRules("birthday", "validBirthDay", "생년월일의 형식은 YYYY.MM.DD 또는 YYYY-MM-DD 입니다.");
 		editValidation.validateRules("emc_phone_num", "validPhoneNumber", "전화번호 형식은 XXX-XXXX-XXXX입니다.");
-
 		editValidation.apply();
-	
 	}
-	
-	
+
 	/**
-	 * 제출 콜백 핸들러 convert form to Object
+	 * 생성 제출 콜백 핸들러
 	 */
-	ctrl.editSubmitHandler = function(form){
+	ctrl.createSubmitHandler = function(form){
 		var self = et.vc;
 		var formData = ETValidate.convertFormToObject(form, true, true);
-		
-		//formData.emp_num = $("#emp_num").val();
-		
-		//데이터 콘솔에 찍어보기
-		console.log(formData);
-		
-		//jsp에 disabled되있는건 직접 가져와서 넣어야함
-		
-		//java단 구현하면 보낼 경로 설정 new ETService().setSuccessFunction(self.editSubmitSuccessHandler).callService(self.path + "/update", formData);
-		
+		console.log(formData); // 
+		//new ETService().setSuccessFunction(self.createSuccessSubmitHandler).callService(self.path + "/create", {});
 	}
 	
 	/**
-	 * 제출 후 response 콜백 핸들러
+	 * 제출 성공 콜백 핸들러
 	 */
-	ctrl.editSubmitSuccessHandler = function(result){
+	ctrl.createSuccessSubmitHandler = function(result){
 		var self = et.vc;
-		if(result.message === "success"){}
-	}
-
-	
+		if(result.message === "success"){
+			
+		}
+	} 
 	return ctrl;
-}));
+	}));
