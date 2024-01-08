@@ -62,10 +62,15 @@
 		/**
 		 * 서버에서 응답받은 결과를 처리하는 함수입니다.
 		 *
-		 * @param {object} response 서버 응답 결과
+		 * @param {Object} response 서버 응답 결과
 		 * */
 		ctrl.resultFunction = function (response) {
 			var self = et.vc
+			
+			/*
+			 * 메모:
+			 * 여기서 this 는 해당 함수를 호출한 주체인 ETService 객체에 바인딩 된다.
+			 * */
 			
 			let empList = null
 			if (response.message === 'success') {

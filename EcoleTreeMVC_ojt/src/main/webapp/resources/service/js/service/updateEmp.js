@@ -52,22 +52,25 @@
 			// 숫자만 (사번)
 			self.regExp['numberOnlyReg'] = /^\d+$/g
 			// 핸드폰 번호
-			self.regExp['phoneReg'] = /^\d{3}-\d{4}-\d{4}$/g
+			// 하이픈(-) 에 ? 를 붙여 010-1234-1234, 01012341234 모두 통과시킵니다.
+			self.regExp['phoneReg'] = /^\d{3}-?\d{4}-?\d{4}$/g
 			// 이메일 확인
-			self.regExp['emailReg'] = /^\w([-_.]?\w)*@\w([-_.]?\w)*\.[a-zA-Z]{2,3}$/i
+			self.regExp['emailReg'] = /^\w([-_.]?\w)*@\w([-_.]?\w)*\.[a-zA-Z]{2,3}$/ig
 			// 빈칸 확인
 			self.regExp['whiteSpaceReg'] = /\s/g
 			// 특수문자 확인
-			self.regExp['irregularCharReg'] = /[!?@#$%^&*():;+-=~{}<>_[\]|\\"',./`₩]/g
+			self.regExp['specialCharReg'] = /[!?@#$%^&*():;+-=~{}<>_[\]|\\"',./`₩]/g
 			// 하이픈(-) 제외 특수문자 확인
-			self.regExp['irregularCharRegWithoutHyphen'] = /[!?@#$%^&*():;+=~{}<>_[\]|\\"',./`₩]/g
+			self.regExp['specialCharRegWithoutHyphen'] = /[!?@#$%^&*():;+=~{}<>_[\]|\\"',./`₩]/g
 			// 하이픈(-), 닷(.) 제외 특수문자 확인
-			self.regExp['irregularCharRegWithoutHyphenAndDot'] = /[!?@#$%^&*():;+=~{}<>_[\]|\\"',/`₩]/g
-			// 영문이름 && 2~6 글자 제한
-			self.regExp['engOnlyReg'] = /^[a-zA-Z]?$/g
+			self.regExp['specialCharRegWithoutHyphenAndDot'] = /[!?@#$%^&*():;+=~{}<>_[\]|\\"',/`₩]/g
+			// 영문이름
+			self.regExp['engOnlyReg'] = /^[a-zA-Z]*$/g
 			// 생년월일
 			// 1999.01.01, 1991.1.1, 1991-01-01, 1991-1-1
 			self.regExp['birthDateReg'] = /^\d{4}[.|-]\d{1,2}[.|-]\d{1,2}$/g
+			// 한글 + 영어 + 숫자
+			self.regExp['koreanReg'] = /^[ㄱ-ㅎ가-힣a-zA-Z]*$/g
 		}
 		
 		/**
@@ -128,9 +131,10 @@
 		/**
 		 * 수정 버튼을 클릭했을 시, form 을 제출하는 함수를 호출합니다.
 		 * */
-		ctrl.btnEditClickHandler = function () {
+		ctrl.btnEditClickHandler = function (e) {
 			var self = et.vc
 			
+			e.preventDefault()
 			$('#editForm').submit()
 		}
 		// ============================== DataTables 생성, 이벤트들 ==============================
@@ -149,25 +153,25 @@
 			.setSubmitHandler(self.editSubmitHandler)
 			.setShowErrors(et.setErrorFunction())
 			
-			// 커스텀 룰 - 숫자만 (사번)
-			ETValidate.addMethod('numberOnlyReg', function (value, element, params) {
-				return self.regExp.numberOnlyReg.test(value.toString().trim()) && !self.regExp.irregularCharReg.test(value.toString().trim())
-			})
 			// 커스텀 룰 - 핸드폰 형식 체크
 			ETValidate.addMethod('phoneReg', function (value, element, param) {
-				return self.regExp.phoneReg.test(value.toString().trim()) && !self.regExp.irregularCharRegWithoutHyphen.test(value.toString().trim())
+				const parsed = value.toString().trim().replace(self.regExp.specialCharRegWithoutHyphen, '')
+				return self.regExp.phoneReg.test(parsed)
 			})
 			// 커스텀 룰 - 이메일 형식 체크
 			ETValidate.addMethod('emailReg', function (value, element, params) {
-				return self.regExp.emailReg.test(value.toString().trim())
+				const parsed = value.toString().trim()
+				return self.regExp.emailReg.test(parsed)
 			})
 			// 커스텀 룰 - 생년월일 체크
 			ETValidate.addMethod('birthDateReg', function (value, element, params) {
-				return self.regExp.birthDateReg.test(value.toString().trim()) && !self.regExp.irregularCharRegWithoutHyphenAndDot.test(value.toString().trim())
+				const parsed = value.toString().trim().replace(self.regExp.specialCharRegWithoutHyphenAndDot, '')
+				return self.regExp.birthDateReg.test(parsed)
 			})
 			// 커스텀 룰 - 영문이름 체크
 			ETValidate.addMethod('engOnlyReg', function (value, element, params) {
-				return self.regExp.engOnlyReg.test(value.toString().trim()) && !self.regExp.irregularCharReg.test(value.toString().trim())
+				const parsed = value.toString().trim().replace(self.regExp.specialCharRegCharReg, '')
+				return value.toString() !== '' ? self.regExp.engOnlyReg.test(parsed) : true
 			})
 			
 			// (1) emp_name
