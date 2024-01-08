@@ -29,10 +29,14 @@
 		/**
 		 * init VIEW
 		 */
-		ctrl.init = function () {
+		ctrl.init = function (initData) {
 			var self = et.vc
 			
 			ctrl.regExp = {} // 정규식을 전역변수에 담는다.
+			
+			// [수정사항]
+			// initData 가져와서 list 로 뿌려주기
+			// ETService() 사용한 api 콜 줄이기
 			
 			// 직원 데이터 호출
 			ETService()
@@ -77,27 +81,27 @@
 			var self = et.vc
 			
 			// 숫자만 (사번)
-			self.regExp['numberOnlyReg'] = /^\d+$/g
+			self.regExp['numberOnlyReg'] = new RegExp(/^\d+$/)
 			// 핸드폰 번호
 			// 하이픈(-) 에 ? 를 붙여 010-1234-1234, 01012341234 모두 통과시킵니다.
-			self.regExp['phoneReg'] = new RegExp(/^\d{3}-?\d{4}-?\d{4}$/g)
+			self.regExp['phoneReg'] = new RegExp(/^\d{3}-?\d{4}-?\d{4}$/)
 			// 이메일 확인
-			self.regExp['emailReg'] = new RegExp(/^\w([-_.]?\w)*@\w([-_.]?\w)*\.[a-zA-Z]{2,3}$/ig)
+			self.regExp['emailReg'] = new RegExp(/^\w([-_.]?\w)*@\w([-_.]?\w)*\.[a-zA-Z]{2,3}$/i)
 			// 빈칸 확인
-			self.regExp['whiteSpaceReg'] = new RegExp(/\s/g)
+			self.regExp['whiteSpaceReg'] = new RegExp(/\s/)
 			// 특수문자 확인
-			self.regExp['specialCharReg'] = new RegExp(/[!?@#$%^&*():;+-=~{}<>_[\]|\\"',./`₩]/g)
+			self.regExp['specialCharReg'] = new RegExp(/[!?@#$%^&*():;+-=~{}<>_[\]|\\"',./`₩]/)
 			// 하이픈(-) 제외 특수문자 확인
-			self.regExp['specialCharRegWithoutHyphen'] = new RegExp(/[!?@#$%^&*():;+=~{}<>_[\]|\\"',./`₩]/g)
+			self.regExp['specialCharRegWithoutHyphen'] = new RegExp(/[!?@#$%^&*():;+=~{}<>_[\]|\\"',./`₩]/)
 			// 하이픈(-), 닷(.) 제외 특수문자 확인
-			self.regExp['specialCharRegWithoutHyphenAndDot'] = new RegExp(/[!?@#$%^&*():;+=~{}<>_[\]|\\"',/`₩]/g)
+			self.regExp['specialCharRegWithoutHyphenAndDot'] = new RegExp(/[!?@#$%^&*():;+=~{}<>_[\]|\\"',/`₩]/)
 			// 영문이름
-			self.regExp['engOnlyReg'] = new RegExp(/^[a-zA-Z]*$/g)
+			self.regExp['engOnlyReg'] = new RegExp(/^[a-zA-Z]*$/)
 			// 생년월일
 			// 1999.01.01, 1991.1.1, 1991-01-01, 1991-1-1
-			self.regExp['birthDateReg'] = new RegExp(/^\d{4}[.|-]\d{1,2}[.|-]\d{1,2}$/g)
+			self.regExp['birthDateReg'] = new RegExp(/^\d{4}[.|-]\d{1,2}[.|-]\d{1,2}$/)
 			// 한글 + 영어 + 숫자
-			self.regExp['koreanReg'] = new RegExp(/^[ㄱ-ㅎ가-힣a-zA-Z]*$/g)
+			self.regExp['koreanReg'] = new RegExp(/^[ㄱ-ㅎ가-힣a-zA-Z]*$/)
 		}
 		// ============================== 동작 컨트롤 ==============================
 		
@@ -179,6 +183,7 @@
 					.trim()
 					.replace(self.regExp.whiteSpaceReg, '')
 					.replace(self.regExp.specialCharReg, '')
+				debugger
 				return value.toString() !== '' ? self.regExp.engOnlyReg.test(parsed) : true
 			})
 			
@@ -249,10 +254,12 @@
 		/**
 		 * form 제출 후, 서버에서 전송한 응답을 처리합니다.
 		 *
-		 * @param {object} response 서버 응답
+		 * @param {Object} response 서버 응답
 		 * */
-		ctrl.editSuccessHandler = function (response) {
+		ctrl.addSuccessHandler = function (response) {
 			var self = et.vc
+			
+			// success 일 시, callView 호출해서 화면에 뿌려주기
 			
 		}
 		

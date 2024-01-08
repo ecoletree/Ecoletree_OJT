@@ -50,27 +50,27 @@
 			var self = et.vc
 			
 			// 숫자만 (사번)
-			self.regExp['numberOnlyReg'] = /^\d+$/g
+			self.regExp['numberOnlyReg'] = new RegExp(/^\d+$/)
 			// 핸드폰 번호
 			// 하이픈(-) 에 ? 를 붙여 010-1234-1234, 01012341234 모두 통과시킵니다.
-			self.regExp['phoneReg'] = new RegExp(/^\d{3}-?\d{4}-?\d{4}$/g)
+			self.regExp['phoneReg'] = new RegExp(/^\d{3}-?\d{4}-?\d{4}$/)
 			// 이메일 확인
-			self.regExp['emailReg'] = new RegExp(/^\w([-_.]?\w)*@\w([-_.]?\w)*\.[a-zA-Z]{2,3}$/ig)
+			self.regExp['emailReg'] = new RegExp(/^\w([-_.]?\w)*@\w([-_.]?\w)*\.[a-zA-Z]{2,3}$/i)
 			// 빈칸 확인
-			self.regExp['whiteSpaceReg'] = new RegExp(/\s/g)
+			self.regExp['whiteSpaceReg'] = new RegExp(/\s/)
 			// 특수문자 확인
-			self.regExp['specialCharReg'] = new RegExp(/[!?@#$%^&*():;+-=~{}<>_[\]|\\"',./`₩]/g)
+			self.regExp['specialCharReg'] = new RegExp(/[!?@#$%^&*():;+-=~{}<>_[\]|\\"',./`₩]/)
 			// 하이픈(-) 제외 특수문자 확인
-			self.regExp['specialCharRegWithoutHyphen'] = new RegExp(/[!?@#$%^&*():;+=~{}<>_[\]|\\"',./`₩]/g)
+			self.regExp['specialCharRegWithoutHyphen'] = new RegExp(/[!?@#$%^&*():;+=~{}<>_[\]|\\"',./`₩]/)
 			// 하이픈(-), 닷(.) 제외 특수문자 확인
-			self.regExp['specialCharRegWithoutHyphenAndDot'] = new RegExp(/[!?@#$%^&*():;+=~{}<>_[\]|\\"',/`₩]/g)
+			self.regExp['specialCharRegWithoutHyphenAndDot'] = new RegExp(/[!?@#$%^&*():;+=~{}<>_[\]|\\"',/`₩]/)
 			// 영문이름
-			self.regExp['engOnlyReg'] = new RegExp(/^[a-zA-Z]*$/g)
+			self.regExp['engOnlyReg'] = new RegExp(/^[a-zA-Z]*$/)
 			// 생년월일
 			// 1999.01.01, 1991.1.1, 1991-01-01, 1991-1-1
-			self.regExp['birthDateReg'] = new RegExp(/^\d{4}[.|-]\d{1,2}[.|-]\d{1,2}$/g)
+			self.regExp['birthDateReg'] = new RegExp(/^\d{4}[.|-]\d{1,2}[.|-]\d{1,2}$/)
 			// 한글 + 영어 + 숫자
-			self.regExp['koreanReg'] = new RegExp(/^[ㄱ-ㅎ가-힣a-zA-Z]*$/g)
+			self.regExp['koreanReg'] = new RegExp(/^[ㄱ-ㅎ가-힣a-zA-Z]*$/)
 		}
 		
 		/**
@@ -219,7 +219,14 @@
 			editValidation.validateRules(
 				'emp_engname',
 				'engOnlyReg',
-				'(영문) 영문만 입력해주세요'
+				'(영문) 영문이름은 영문만 입력해주세요'
+			)
+			
+			// (7) birthday
+			editValidation.validateRules(
+				'birthday',
+				'birthDateReg',
+				'(2000-01-01, 2000.01.01) 생년월일 형식이 맞지 않습니다.'
 			)
 			
 			editValidation.apply()
@@ -233,8 +240,13 @@
 			var self = et.vc
 			
 			let form = $('#editForm')
+			
 			// form 데이터 직렬화
 			let formData = ETValidate.convertFormToObject(form, true, true)
+			
+			// (*중요) PK 삽입
+			// disabled 되어 있어서 직접 넣어줘야 한다.
+			formData.emp_num = $("input[name='emp_num']").val();
 			
 			console.log('[/sample/update] formData 확인', formData)
 			
