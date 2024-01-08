@@ -134,7 +134,6 @@
 		ctrl.btnEditClickHandler = function (e) {
 			var self = et.vc
 			
-			e.preventDefault()
 			$('#editForm').submit()
 		}
 		// ============================== DataTables 생성, 이벤트들 ==============================
@@ -150,8 +149,8 @@
 			
 			let editValidation
 				= new ETValidate('#editForm', self.path + '/update')
-			.setSubmitHandler(self.editSubmitHandler)
-			.setShowErrors(et.setErrorFunction())
+				.setSubmitHandler(self.editSubmitHandler)
+				.setShowErrors(et.setErrorFunction())
 			
 			// 커스텀 룰 - 핸드폰 형식 체크
 			ETValidate.addMethod('phoneReg', function (value, element, param) {
@@ -174,7 +173,7 @@
 					.replace(self.regExp.specialCharRegWithoutHyphenAndDot, '')
 				return self.regExp.birthDateReg.test(parsed)
 			})
-			// 커스텀 룰 - 영문이름 체크
+			// 커스텀 룰 - 영문이름 체크 (필수가 아님)
 			ETValidate.addMethod('engOnlyReg', function (value, element, params) {
 				const parsed = value.toString()
 					.trim()
