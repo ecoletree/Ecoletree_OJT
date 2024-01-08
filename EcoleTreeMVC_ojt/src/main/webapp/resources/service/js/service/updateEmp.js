@@ -108,19 +108,13 @@
 		editValidation.validateRules("birthday", "validBirthDayFormat", "생년월일의 형식은 yyyy-mm-dd 입니다.");
 		editValidation.validateRules("department", "twoNumber", "부서는 두글자로 이루어집니다.");
 		
-		editValidation.validateRules("emp_engname", editValidation.REQUIRED, "영문 이름은 필수입니다.");
+		editValidation.validateRules("emp_name", editValidation.REQUIRED, "이름은 필수입니다.");
+		
 		editValidation.validateRules("department", editValidation.REQUIRED, "부서는 필수입니다.");
 		editValidation.validateRules("position", editValidation.REQUIRED, "직급은 필수입니다.");
 		editValidation.validateRules("email_1", editValidation.REQUIRED, "메일주소1은 필수입니다.");
-		editValidation.validateRules("email_1", editValidation.EMAIL, "메일1의 이메일 형식을 맞춰주세요.");
-		editValidation.validateRules("email_2", editValidation.REQUIRED, "메일주소2는 필수입니다.");
-		editValidation.validateRules("email_2", editValidation.EMAIL, "메일2의 이메일 형식을 맞춰주세요.");
+		
 		editValidation.validateRules("phone_num", editValidation.REQUIRED, "전화번호는 필수입니다.");
-		editValidation.validateRules("birthday", editValidation.REQUIRED, "생년월일은 필수입니다.");
-		editValidation.validateRules("address", editValidation.REQUIRED, "주소는 필수입니다.");
-		editValidation.validateRules("emc_contact_point", editValidation.REQUIRED, "이름(관계)는 필수입니다.");
-		editValidation.validateRules("emc_phone_num", editValidation.REQUIRED, "전화번호는 필수입니다.");
-		editValidation.validateRules("emc_phone_num", "validPhoneNumber", "올바른 (긴급)전화번호 형식이 아닙니다.");
 		editValidation.apply();
 	}
 	

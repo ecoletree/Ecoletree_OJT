@@ -30,10 +30,21 @@
 	 */
 	ctrl.init = function(initData) {
 		var self = et.vc;
+		new ETService().setSuccessFunction(self.codeSuccessResultFunction).callService(self.path + "/code", {});
 		self.setValidation();
 		$("#btnAdd").click(self.btnCreateClickHandler);
 	};
 	
+	/**
+	 * 셀렉트 박스에 들어갈 codeList 값 불러오기
+	 */
+	ctrl.codeSuccessResultFunction = function(result) {
+	    var self = et.vc;
+	    if (result.message === "success") {
+	        var codeList = result.data;
+	        et.makeSelectOption(codeList, {value: "code_cd", text: "code_name"}, "#selPosition", "전체");
+	    }
+	}
 	
 	// ============================== 동작 컨트롤 ==============================
 
@@ -79,16 +90,12 @@
 		editValidation.validateRules("department", "twoNumber", "부서는 두글자로 이루어집니다.");
 		
 		editValidation.validateRules("emp_name", editValidation.REQUIRED, "이름은 필수입니다.");
-		editValidation.validateRules("emp_engname", editValidation.REQUIRED, "영문 이름은 필수입니다.");
+		
 		editValidation.validateRules("department", editValidation.REQUIRED, "부서는 필수입니다.");
 		editValidation.validateRules("position", editValidation.REQUIRED, "직급은 필수입니다.");
 		editValidation.validateRules("email_1", editValidation.REQUIRED, "메일주소1은 필수입니다.");
-		editValidation.validateRules("email_2", editValidation.REQUIRED, "메일주소2는 필수입니다.");
+		
 		editValidation.validateRules("phone_num", editValidation.REQUIRED, "전화번호는 필수입니다.");
-		editValidation.validateRules("birthday", editValidation.REQUIRED, "생년월일은 필수입니다.");
-		editValidation.validateRules("address", editValidation.REQUIRED, "주소는 필수입니다.");
-		editValidation.validateRules("emc_contact_point", editValidation.REQUIRED, "이름(관계)는 필수입니다.");
-		editValidation.validateRules("emc_phone_num", editValidation.REQUIRED, "전화번호는 필수입니다.");
 		editValidation.apply();
 	}
 	
