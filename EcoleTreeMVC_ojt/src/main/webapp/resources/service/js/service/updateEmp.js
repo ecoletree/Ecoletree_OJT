@@ -100,7 +100,7 @@
 			return value.length > 5;
 		});	
 		
-		var editValidation = ETValidate().setSubmitHandler(self.editSubmitHandler).setShowErrors(et.setErrorFunction());
+		var editValidation = new ETValidate().setSubmitHandler(self.editSubmitHandler).setShowErrors(et.setErrorFunction());
 		editValidation.validateRules("emp_name",editValidation.REQUIRED,"이름은 필수입니다."); 
 		editValidation.apply();
 		
