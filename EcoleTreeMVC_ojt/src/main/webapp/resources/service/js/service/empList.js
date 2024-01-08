@@ -35,14 +35,14 @@
 		$("#cbAllClick").change(self.checkboxHandler);
 		$("#btnDelete").click(self.btnDeleteHandler);
 		et.setDataTableRowSelection("#tbList", self.rowClickHandler);
-
 	};
-	
+	/**
+	 * 셀렉트 박스에 들어갈 codeList 값 불러오기
+	 */
 	ctrl.codeSuccessResultFunction = function(result) {
 	    var self = et.vc;
 	    if (result.message === "success") {
 	        var codeList = result.data;
-	        
 	        et.makeSelectOption(codeList, {value: "code_cd", text: "code_name"}, "#selPosition", "전체");
 	    }
 	}
@@ -50,19 +50,21 @@
 	// ============================== 동작 컨트롤 ==============================
 
 	// ============================== 이벤트 리스너 ==============================
-	
+	/**
+	 * 찾기 버튼 클릭 핸들러
+	 */
 	ctrl.btnSearchHandler = function(){
 		var self = et.vc;
 		var param = {};
 		param.emp_name = $("#iptSearch").val();
 		param.position = $("#selPosition").val();
-		
-		console.log(param);
 		self.createDateTables(param);
 	}
 	
 	// ============================== DataTables 생성, 이벤트들 ==============================
-
+	/**
+	 * 검색 데이터 테이블 생성
+	 */
 	ctrl.createDateTables = function(postData){
 		var self = et.vc;
 		var columns = [
@@ -82,10 +84,16 @@
 		$("#tbList").DataTable(option);
 	}
 	
+	/**
+	 * 테이블 생성 후 콜백
+	 */
 	ctrl.dataTableCallback = function(settings){
 		var self = et.vc;
 	}
 	
+	/**
+	 * row 클릭시 핸들러
+	 */
 	ctrl.rowClickHandler = function($target, row, col, columnVisible){
 		var self = et.vc;
 		if(col === 0 || col === undefined){}
@@ -95,13 +103,19 @@
 		}
 	}
 	
+	/**
+	 * 체크박스 전체 선택 해제 핸들러
+	 */
 	ctrl.checkboxHandler = function() {
 	    var checkAll = $("#cbAllClick");
 	    var checkboxes = $("input[name='checkBox']");
 	    
 	    checkboxes.prop('checked', checkAll.prop('checked'));
 	}
-	
+
+	/**
+	 * 삭제 버튼 클릭시 핸들러
+	 */	
 	ctrl.btnDeleteHandler = function($target){
 		var checkboxes = $("input[type='checkbox']:checked")
 		var result = {};
@@ -113,7 +127,7 @@
 			alert('삭제할 데이터를 선택해주세요.');
 		}
 		else{
-			console.log(result);
+			//ETService().setSuccessFunction(self.codeSuccessResultFunction).callService(self.path + "/delete", {});
 		}
 	}
 	// ============================== Form 리스너 ==============================
