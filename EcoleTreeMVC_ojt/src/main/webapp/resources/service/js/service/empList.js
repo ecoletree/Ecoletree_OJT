@@ -1,9 +1,9 @@
 /*******************************************************************************
  * Copyright (c) 2017 Ecoletree. All Rights Reserved.
  * 
- * @Author : kkh
- * @CreateDate : 2023. 12. 06.
- * @DESC : 사원관리
+ * @Author : jjy
+ * @CreateDate : 2024. 1. 04.
+ * @DESC : script sample
  ******************************************************************************/
 (function(et, ctrl) {
 	if (_.isObject(et) && et.name === ETCONST.PROJECT_NAME) {
@@ -15,12 +15,14 @@
 		console.error("ecoletree OR ETCONST is not valid. please check that common.js file was imported.");
 	}
 }(this.ecoletree, function(et) {
+	
 	"use strict";
 	
 	var ctrl = {};
 	
 	ctrl.name = "empList";
 	ctrl.path = "/";
+
 	
 	// ============================== 화면 컨트롤 ==============================
 	/**
@@ -28,138 +30,151 @@
 	 */
 	ctrl.init = function(initData) {
 		var self = et.vc;
+//		ETService().setSuccessFunction(self.codeSuccessResultFunction).callService(self.path + "/code", {});
+		$("#btnSearch").click(self.btnSearchHandler);
+		et.setDataTableRowSelection("#tbList", self.rowClickHandler);
 		
-//		new ETService().setSuccessFunction(self.getCodeListHandler).callService("/sample/code", {});
-
-//		self.btnClickHandler();
-
-		$("#btnSearch").click(self.btnSearchClickHandler);
-		$("#cbAllClick").click(self.cbAllClickHandler);
-		$("#btnDelete").click(self.btnclickListHandler);
-//		$("#btnSearch").trigger("click");
-		
-		// 엔터키 이벤트 핸들러(검색 핸들러 function 넣으시면 됩니다)
-		et.setEnterKeyDownEvent("#iptSearch",self.btnSearchClickHandler);
-
-		et.setDataTableRowSelection("#tbList",self.tbListRowClickHandler);
-		
-		
-	};
+    	$("#cbAllClick").click(self.checkAllBox);
+    	$("#tbList tbody").on("change", "input:checkbox", self.allChk);
+    	$("#btnDelete").click(self.btnDeleteListHandler);
+    	
+    	}
+	
+	/**
+	 * 체크박스 전체 선택
+	 */
+	ctrl.checkAllBox = function(){
+		var self = et.vc;
+		var checked = $(this).prop("checked");
+        $("input:checkbox").prop("checked", checked);
+	}
+	
+	/**
+	 * 사원 코드 정보 불러오기 성공 함수
+	 */
+	ctrl.codeSuccessResultFunction = function(result){
+		var self = et.vc;
+		var codeList = result.data;
+		et.makeSelectOption(codeList, {value:"code_cd", text:"code_name"}, "#selPosition", "전체");
+	}
+	
+	
+	/**
+	 * 체크박스가 전체 선택됐는지 확인 후, 전체 선택 상태가 아니라면 전체 선택버튼 체크해제
+	 */
+	ctrl.allChk = function(){
+		var self = et.vc;
+		var allChecked = true;
+        $("#tbList tbody input:checkbox").each(function() {
+            if (!$(this).prop("checked")) {
+            allChecked = false;
+            return false;
+            		}
+        		});
+        	$("#cbAllClick").prop("checked", allChecked);
+    	}
 
 	// ============================== 동작 컨트롤 ==============================
 
-	/**
-	 * 코드 리스트 가져오기
-	 */
-	ctrl.getCodeListHandler = function(result){
-		var self = et.vc;
-		var codeList = result.data;
-		et.makeSelectOption(codeList, {value:"code_cd",text:"code_name"}, "#selPosition", "전체");
-	}
-	
 	// ============================== 이벤트 리스너 ==============================
+	
 	/**
-	 * 검색버튼 클릭 핸들러
-	 */	
-	ctrl.btnSearchClickHandler = function(){
+	 * 조회 버튼 핸들러
+	 */
+	ctrl.btnSearchHandler = function(){
 		var self = et.vc;
-		var params = {};
-		params.emp_name = $("#iptSearch").val();
-		params.position = $("#selPosition").val();
-		self.createDataTables(params);
+		var param = {};
+		param.emp_name = $("#iptSearch").val();
+		param.position = $("#selPosition").val();
+		
+		self.createDataTables(param);
+	
+		}
+	
+	
+	/**
+	 * 삭제 버튼 핸들러
+	 */
+	ctrl.btnDeleteListHandler = function($target){
+		var self = et.vc;
+		var chkboxes = [];
+		
+		$("#tbList tbody input:checked").each(function(index){
+			var rowData = et.getRowData("#tbList", $(this).parents("tr"));
+			chkboxes.push(rowData);
+		});
+		
+		if (chkboxes.length === 0) {
+    		alert("삭제할 데이터를 선택해주세요");
+		}
+		
+		//ETService().setSuccessFunction(self.deleteSuccessHandler).callService(self.path + "/delete");
+		
 	}
 	
 	/**
-	 * 체크박스 전체 선택 핸들러
+	 * 삭제 버튼 성공 함수 
 	 */
-	ctrl.cbAllClickHandler = function(){//체크박스 전체 선택
-		if ($("#cbAllClick").is(':checked')) {
-			$("input[type=checkbox]").prop("checked",true);
-		}else {
-			$("input[type=checkbox]").prop("checked",false);
-		}
+	ctrl.deleteSuccessHandler = function(result){
+		var self = et.vc;
+		alert("삭제 완료되었습니다.");
+		location.reload();
 	}
+
+
+	
 	// ============================== DataTables 생성, 이벤트들 ==============================
 	
 	/**
-	 * 테이블 생성
+	 * 데이터테이블 생성 함수
 	 */
 	ctrl.createDataTables = function(postData){
 		var self = et.vc;
 		var columns = [
-			{data : "emp_cd", render:function(data,type,row,meta){
-				return '<input type="checkbox">';
-			}}
-			,{data : "emp_num"}
-			,{data : "emp_name"}
-			,{data : "emp_engname"}
-			,{data : "position",render:function(data,type,row){
-				return row.position_name;
-			}}
-			,{data : "email_1"}
-			,{data : "phone_num"}
-			,{data : "birthday"}
+			{data:"user_cd", render:function(data,type,row,meta){
+				return '<input type = "checkbox">'
+			}},
+			{data:"num"},
+			{data:"type"},
+			{data:"name"},
+//			{data:"position", render:function(data,type,row,meta){
+//				return row.position_name;
+//			}},
+//			{data:"email_1"},
+//			{data:"phone_num"},
+//			{data:"birthday"},
 		]
-		
-		var option = et.createDataTableSettings(columns,"/sample/list", postData, self.dataTableDrawCallback);
+		var option = et.createDataTableSettings(columns, self.path + "/getEmpList", postData, self.dataTableCallBack);
 		option.paging = false;
-		
 		$("#tbList").DataTable(option);
 	}
 	
+	
 	/**
-	 * 테이블 생성 후 콜백
+	 * 데이터테이블 콜백 함수
 	 */
-	ctrl.dataTableCallback = function(settings){
+	ctrl.dataTableCallBack = function(settings){
 		var self = et.vc;
-		console.log("data table list");
+		
 	}
 	
 	/**
-	 * 테이블 로우 클릭 핸들러
- 	 * et.getRowData = function(tableId, row)
-	 * rowClickAction($target, cell.row, cell.column, cell.columnVisible);
+	 * 데이터 클릭 시 수정 화면으로 넘어가는 기능
 	 */
-	ctrl.tbListRowClickHandler = function($target, row, col){
+
+	ctrl.rowClickHandler = function($target, row, col, columnVisible){
 		var self = et.vc;
-		if(column === 0 || column === undefined){}else{
-				var rowData = et.getRowData("#tbList",$target.closest("tr"));
-				new ETService().callView(self.path+"/update",rowData);
-		}
+		if(col === 0 || col === undefined){}
+		else{
+			var rowData = et.getRowData("#tbList", $target.closest("tr"));
+			
+			ETService().callView("/detail", rowData);
 		
-		
-	}
-	/**
-	 * 테이블 로우 선택 삭제 delete
-	 */
-	ctrl.btnclickListHandler = function() {
-		var self = et.vc;
-		
-		var paramArr = [];
-		$("#tbList tbody input:checked").each(function(index){
-			var chkData = et.getRowData("#tbList", $(this).parents("tr"));
-			paramArr.push(chkData);
-		});
-		var chkParam = {};
-		chkParam.paramKey = paramArr;
-		
-		if (chkParam.paramKey.length === 0) {
-			alert("삭제할 데이터를 체크해 주세요.");
-			return;
-		}else {
-			console.log(chkParam);
-//			new ETService().setSuccessFunction(self.userDeleteSuccessHandler).callService(self.path+"/delete", chkParam);
+			
 		}
 	}
-	/**
-	 * 테이블 로우 선택 삭제 delete 콜백
-	 */
-	ctrl.userDeleteSuccessHandler = function (result) {
-		var self = et.vc;
-		alert("삭제 완료");
-		location.reload();
-	}
-	
+
+
 	// ============================== Form 리스너 ==============================
 
 	

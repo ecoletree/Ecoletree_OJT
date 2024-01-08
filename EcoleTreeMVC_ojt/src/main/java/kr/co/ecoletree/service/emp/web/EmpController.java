@@ -57,7 +57,7 @@ public class EmpController extends ETBaseController{
 	}
 	
 
-	@RequestMapping(value = "/create") //context path localhost:portnum/프로젝트명/{1}/{2}
+	@RequestMapping(value = "/detail") //context path localhost:portnum/프로젝트명/{1}/{2}
 	public ModelAndView openCreate(ModelAndView mav, Map<String, Object> params) {
 		mav.setViewName(".service.body.createEmp"); //뷰의 경로 지정
 		return mav;

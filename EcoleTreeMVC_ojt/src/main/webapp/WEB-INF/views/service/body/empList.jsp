@@ -19,13 +19,13 @@
 		<thead>
 			<tr>
 				<th><input type="checkbox" id="cbAllClick"></th>
-				<th>사번</th>0
+				<th>사번</th>
 				<th>이름</th>
 				<th>영문이름</th>
-				<th>직급</th>
-				<th>이메일주소</th>
-				<th>전화번호</th>
-				<th>생년월일</th>
+<!-- 				<th>직급</th> -->
+<!-- 				<th>이메일주소</th> -->
+<!-- 				<th>전화번호</th> -->
+<!-- 				<th>생년월일</th> -->
 			</tr>
 			</thead>
 			<tbody >
