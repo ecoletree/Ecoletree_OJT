@@ -112,8 +112,25 @@
 			return birthDayPattern.test(value);
 		});
 		
+		//한글 이름 유효성 검사(한글만 입력 가능)
+		ETValidate.addMethod("validKorName", function(value, element, params) {
+			var korNamePattern = /^[가-힣]+$/;
+			return korNamePattern.test(value);
+		});
+		
+		//영문 이름 유효성 검사(영어만 입력 가능)
+		ETValidate.addMethod("validEngName", function(value, element, params) {
+			if(value === undefined || value.length == 0){
+				return true;
+			}
+			var engNamePattern = /^[A-Za-z]+$/;
+			return engNamePattern.test(value);
+		});
+		
 		var editValidation = new ETValidate("editForm").setSubmitHandler(self.editSubmitHandler).setShowErrors(et.setErrorFunction());
 		editValidation.validateRules("emp_name", editValidation.REQUIRED, "이름은 필수입니다.");
+		editValidation.validateRules("emp_name", validKorName, "이름은 한글만 입력 가능합니다.");
+		editValidation.validateRules("emp_engname", "validEngName", "영문 이름은 영어만 입력해주세요.");
 		editValidation.validateRules("department", editValidation.REQUIRED, "부서는 필수입니다.");
 		editValidation.validateRules("position", editValidation.REQUIRED, "직급은 필수입니다.");
 		editValidation.validateRules("email_1", editValidation.REQUIRED, "메일주소1은 필수입니다.");
