@@ -20,7 +20,7 @@
 	var ctrl = {};
 	
 	ctrl.name = "empList";
-	ctrl.path = "/emp";
+	ctrl.path = "/";
 	
 	// ============================== 화면 컨트롤 ==============================
 	/**
@@ -29,9 +29,9 @@
 	ctrl.init = function(initData) {
 		var self = et.vc;
 		
-		new ETService().setSuccessFunction(self.getCodeListHandler).callService("/sample/code", {});
+//		new ETService().setSuccessFunction(self.getCodeListHandler).callService("/sample/code", {});
 
-		self.btnClickHandler();
+//		self.btnClickHandler();
 
 		$("#btnSearch").click(self.btnSearchClickHandler);
 		$("#cbAllClick").click(self.cbAllClickHandler);

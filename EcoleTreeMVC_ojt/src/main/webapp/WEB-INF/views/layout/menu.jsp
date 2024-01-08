@@ -31,12 +31,12 @@
                                 </a>
                                 <ul>
                                 	<li>
-                                        <a href="${cp }/emp/list" title="Menu child" data-filter-tags="utilities menu child">
+                                        <a href="${cp }/list" title="Menu child" data-filter-tags="utilities menu child">
                                             <span class="nav-link-text" data-i18n="nav.utilities_menu_child">사원 검색</span>
                                         </a>
                                     </li>
                                     <li>
-                                        <a href="${cp }/emp/create" title="Menu child" data-filter-tags="utilities menu child">
+                                        <a href="${cp }/create" title="Menu child" data-filter-tags="utilities menu child">
                                             <span class="nav-link-text" data-i18n="nav.utilities_menu_child">사원 생성</span>
                                         </a>
                                     </li>

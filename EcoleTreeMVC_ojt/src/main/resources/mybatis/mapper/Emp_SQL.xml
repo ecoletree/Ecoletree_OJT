@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	* Copyright (c) 2017 EcoleTree. All Rights Reserved.
+	* 
+	* Author : 	
+	* Created : 2024. 01. 04
+	* DESC :  SQL sample
+-->
+<mapper namespace="kr.co.ecoletree.service.emp.mapper.EmpMapper">
+
+
+
+	<select id="selectEmpList" parameterType="map" resultType="map">
+		select
+			a.user_cd
+			, a.num
+			, a.type
+			, a.name
+		from TB_TEST a
+		where 1=1
+	</select>
+	
+	
+	
+	<select id="selectEmpListCnt" parameterType="map" resultType="int">
+		select
+			count(*)
+		from TB_TEST a
+		where 1=1
+	</select>
+
+	
+</mapper>
