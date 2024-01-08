@@ -28,15 +28,21 @@
 	/**
 	 * init VIEW
 	 */
-
 	ctrl.init = function(initData) {
 		var self = et.vc;
 		var codeList = initData.codeList;
 		var rowData = initData.rowData;
 		et.makeSelectOption(codeList, {value:"code_cd", text:"code_name"}, "#selPosition", "전체");
 		self.setInputView("#editForm",rowData);
+		self.setValidation();
+		$("#btnEdit").click(self.btnEditClickHandler);
+		
 	};
 
+
+	/**
+	 * rowData 값을 각 element에 맞게 보여주기
+	 */
 	ctrl.setInputView = function(formId,rowData){
 		var self = et.vc;
 		var triggerElement = []; //form의 각 요소를 담아두는 배열 나중에 트리거로 뽑아서 입력하기 위함
@@ -61,10 +67,56 @@
 
 	// ============================== 이벤트 리스너 ==============================
 
+	/**
+	 * 수정 버튼 클릭시 핸들러
+	 */
+    ctrl.btnEditClickHandler = function(){
+		var self = et.vc;
+		$("#editForm").submit();
+	}
 	
 	// ============================== DataTables 생성, 이벤트들 ==============================
 
 	// ============================== Form 리스너 ==============================
 
+	/**
+	 * 데이터의 유효성 검사(필수로 들어가야하는 데이터 검증)
+	 */
+	ctrl.setValidation = function(){
+		var self = et.vc;
+		var editValidation = new ETValidate("editForm").setSubmitHandler(self.editSubmitHandler).setShowErrors(et.setErrorFunction());
+		editValidation.validateRules("emp_name", editValidation.REQUIRED, "이름은 필수입니다.");
+		editValidation.validateRules("emp_engname", editValidation.REQUIRED, "영문 이름은 필수입니다.");
+		editValidation.validateRules("department", editValidation.REQUIRED, "부서는 필수입니다.");
+		editValidation.validateRules("position", editValidation.REQUIRED, "직급은 필수입니다.");
+		editValidation.validateRules("email_1", editValidation.REQUIRED, "메일주소1은 필수입니다.");
+		editValidation.validateRules("email_2", editValidation.REQUIRED, "메일주소2는 필수입니다.");
+		editValidation.validateRules("phone_num", editValidation.REQUIRED, "전화번호는 필수입니다.");
+		editValidation.validateRules("birthday", editValidation.REQUIRED, "생년월일은 필수입니다.");
+		editValidation.validateRules("address", editValidation.REQUIRED, "주소는 필수입니다.");
+		editValidation.validateRules("emc_contact_point", editValidation.REQUIRED, "이름(관계)는 필수입니다.");
+		editValidation.validateRules("emc_phone_num", editValidation.REQUIRED, "전화번호는 필수입니다.");
+		editValidation.apply();
+	}
+	
+	/**
+	 * 제출 후 콜백 핸들러
+	 */
+	ctrl.editSubmitHandler = function(formId){
+		var self = et.vc;
+		var formData = ETValidate.convertFormToObject(formId, true, true);
+		console.log(formData); //formData 어떤 형태로 오는지 확인 과제
+		//new ETService().setSuccessFunction(self.editSuccessSubmitHandler).callService(self.path + "/update", {});
+	}
+	
+	/**
+	 * 제출 성공 콜백 핸들러
+	 */
+	ctrl.editSuccessSubmitHandler = function(result){
+		var self = et.vc;
+		if(result.message === "success"){
+			
+		}
+	} 
 	return ctrl;
 }));
