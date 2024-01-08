@@ -32,7 +32,7 @@
 		<div class="formWrap">
 			<label class="formLabel">직급<span class="require"style="color:red;">*</span></label>
 			<div class="formInput">
-			<select id="selPosition" name="position">
+			<select id="selPosition" name="position" maxlength="2">
 			</select>
 			</div>
 		</div>

@@ -55,6 +55,29 @@
 	ctrl.setValidation = function(){
 		var self = et.vc;
 		var editValidation = new ETValidate("addForm").setSubmitHandler(self.createSubmitHandler).setShowErrors(et.setErrorFunction());
+		
+		ETValidate.addMethod("validPhoneNumber", function(value, element, params) {
+		    var phoneNumber = value.replace(/[\s-]/g, '');
+		    var phoneNumberLength = phoneNumber.length;
+		    
+		    return (phoneNumberLength === 11) && /^\d+$/.test(phoneNumber);
+		});
+		
+		ETValidate.addMethod("validBirthDayFormat", function(value, element, params) {
+			var regex = RegExp(/^\d{4}-(0[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])$/);
+		    if ( !regex.test(value)) {
+       			 return false;
+    		}
+		});
+		
+		ETValidate.addMethod("twoNumber", function(value, element, params){
+			return value.length === 2;
+		});
+		
+		editValidation.validateRules("phone_num", "validPhoneNumber", "전화번호 형식은 010-XXXX-XXXX입니다.");
+		editValidation.validateRules("birthday", "validBirthDayFormat", "생년월일의 형식은 yyyy-mm-dd 입니다.");
+		editValidation.validateRules("department", "twoNumber", "부서는 두글자로 이루어집니다.");
+		
 		editValidation.validateRules("emp_name", editValidation.REQUIRED, "이름은 필수입니다.");
 		editValidation.validateRules("emp_engname", editValidation.REQUIRED, "영문 이름은 필수입니다.");
 		editValidation.validateRules("department", editValidation.REQUIRED, "부서는 필수입니다.");

@@ -104,7 +104,7 @@
 			return value.length === 2;
 		});
 		
-		editValidation.validateRules("phone_num", "validPhoneNumber", "올바른 전화번호 형식이 아닙니다.");
+		editValidation.validateRules("phone_num", "validPhoneNumber", "전화번호 형식은 010-XXXX-XXXX입니다.");
 		editValidation.validateRules("birthday", "validBirthDayFormat", "생년월일의 형식은 yyyy-mm-dd 입니다.");
 		editValidation.validateRules("department", "twoNumber", "부서는 두글자로 이루어집니다.");
 		
