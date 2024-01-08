@@ -53,24 +53,24 @@
 			self.regExp['numberOnlyReg'] = /^\d+$/g
 			// 핸드폰 번호
 			// 하이픈(-) 에 ? 를 붙여 010-1234-1234, 01012341234 모두 통과시킵니다.
-			self.regExp['phoneReg'] = /^\d{3}-?\d{4}-?\d{4}$/g
+			self.regExp['phoneReg'] = new RegExp(/^\d{3}-?\d{4}-?\d{4}$/g)
 			// 이메일 확인
-			self.regExp['emailReg'] = /^\w([-_.]?\w)*@\w([-_.]?\w)*\.[a-zA-Z]{2,3}$/ig
+			self.regExp['emailReg'] = new RegExp(/^\w([-_.]?\w)*@\w([-_.]?\w)*\.[a-zA-Z]{2,3}$/ig)
 			// 빈칸 확인
-			self.regExp['whiteSpaceReg'] = /\s/g
+			self.regExp['whiteSpaceReg'] = new RegExp(/\s/g)
 			// 특수문자 확인
-			self.regExp['specialCharReg'] = /[!?@#$%^&*():;+-=~{}<>_[\]|\\"',./`₩]/g
+			self.regExp['specialCharReg'] = new RegExp(/[!?@#$%^&*():;+-=~{}<>_[\]|\\"',./`₩]/g)
 			// 하이픈(-) 제외 특수문자 확인
-			self.regExp['specialCharRegWithoutHyphen'] = /[!?@#$%^&*():;+=~{}<>_[\]|\\"',./`₩]/g
+			self.regExp['specialCharRegWithoutHyphen'] = new RegExp(/[!?@#$%^&*():;+=~{}<>_[\]|\\"',./`₩]/g)
 			// 하이픈(-), 닷(.) 제외 특수문자 확인
-			self.regExp['specialCharRegWithoutHyphenAndDot'] = /[!?@#$%^&*():;+=~{}<>_[\]|\\"',/`₩]/g
+			self.regExp['specialCharRegWithoutHyphenAndDot'] = new RegExp(/[!?@#$%^&*():;+=~{}<>_[\]|\\"',/`₩]/g)
 			// 영문이름
-			self.regExp['engOnlyReg'] = /^[a-zA-Z]*$/g
+			self.regExp['engOnlyReg'] = new RegExp(/^[a-zA-Z]*$/g)
 			// 생년월일
 			// 1999.01.01, 1991.1.1, 1991-01-01, 1991-1-1
-			self.regExp['birthDateReg'] = /^\d{4}[.|-]\d{1,2}[.|-]\d{1,2}$/g
+			self.regExp['birthDateReg'] = new RegExp(/^\d{4}[.|-]\d{1,2}[.|-]\d{1,2}$/g)
 			// 한글 + 영어 + 숫자
-			self.regExp['koreanReg'] = /^[ㄱ-ㅎ가-힣a-zA-Z]*$/g
+			self.regExp['koreanReg'] = new RegExp(/^[ㄱ-ㅎ가-힣a-zA-Z]*$/g)
 		}
 		
 		/**
@@ -155,7 +155,10 @@
 			
 			// 커스텀 룰 - 핸드폰 형식 체크
 			ETValidate.addMethod('phoneReg', function (value, element, param) {
-				const parsed = value.toString().trim().replace(self.regExp.specialCharRegWithoutHyphen, '')
+				const parsed = value.toString()
+					.trim()
+					.replace(self.regExp.whiteSpaceReg, '')
+					.replace(self.regExp.specialCharRegWithoutHyphen, '')
 				return self.regExp.phoneReg.test(parsed)
 			})
 			// 커스텀 룰 - 이메일 형식 체크
@@ -165,12 +168,18 @@
 			})
 			// 커스텀 룰 - 생년월일 체크
 			ETValidate.addMethod('birthDateReg', function (value, element, params) {
-				const parsed = value.toString().trim().replace(self.regExp.specialCharRegWithoutHyphenAndDot, '')
+				const parsed = value.toString()
+					.trim()
+					.replace(self.regExp.whiteSpaceReg, '')
+					.replace(self.regExp.specialCharRegWithoutHyphenAndDot, '')
 				return self.regExp.birthDateReg.test(parsed)
 			})
 			// 커스텀 룰 - 영문이름 체크
 			ETValidate.addMethod('engOnlyReg', function (value, element, params) {
-				const parsed = value.toString().trim().replace(self.regExp.specialCharRegCharReg, '')
+				const parsed = value.toString()
+					.trim()
+					.replace(self.regExp.whiteSpaceReg, '')
+					.replace(self.regExp.specialCharReg, '')
 				return value.toString() !== '' ? self.regExp.engOnlyReg.test(parsed) : true
 			})
 			
@@ -197,21 +206,21 @@
 			editValidation.validateRules(
 				'email_1',
 				'emailReg',
-				'메일은 필수값 입니다.'
+				'(abcd@nate.com) 메일은 필수값 입니다.'
 			)
 			
 			// (5) phone_num
 			editValidation.validateRules(
 				'phone_num',
 				'phoneReg',
-				'유효한 전화번호가 아닙니다.'
+				'(010-1234-1234) 전화번호 형식이 맞지 않습니다.'
 			)
 			
 			// (6) emp_engname
 			editValidation.validateRules(
 				'emp_engname',
 				'engOnlyReg',
-				'(영문이름) 영문만 입력해주세요'
+				'(영문) 영문만 입력해주세요'
 			)
 			
 			editValidation.apply()
