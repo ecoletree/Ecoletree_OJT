@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+	* Copyright (c) 2017 EcoleTree. All Rights Reserved.
+	* 
+	* Author : 	Jeongjin Kim
+	* Created : 2023. 12. 07
+	* DESC :  SQL sample
+-->
+<mapper namespace="kr.co.ecoletree.service.emp.mapper.EmpMgtMapper">
+
+    <insert id="insertEmp" parameterType="map">
+        INSERT INTO TB_EMP_KJJ
+        ( emp_cd
+        , emp_num
+        , emp_name
+        , position)
+        VALUES (#{emp_cd},
+                #{emp_num},
+                #{emp_name},
+                #{position})
+    </insert>
+
+    <select id="selectEmpList" parameterType="map" resultType="map">
+        SELECT emp_cd
+        , emp_num
+        , emp_name
+        , emp_engname
+        , position
+        , email_1
+        , email_2
+        , phone_num
+        , birthday
+        , address
+        , emc_contact_point
+        , emc_phone_num
+        , delete_yn
+
+        FROM TB_EMP_KJJ
+        WHERE 1=1
+
+        <if test="position != null and position != ''">
+            AND position = #{position}
+        </if>
+
+        <if test="emp_name != null and emp_name != ''">
+            AND emp_name = #{emp_name}
+        </if>
+
+        ORDER BY entered_dttm
+    </select>
+
+
+    <select id="selectEmpListCnt" parameterType="map" resultType="int">
+        SELECT
+            count(*) as cnt
+        FROM TB_EMP_KJJ
+        WHERE 1=1
+    </select>
+
+    <select id="updateEmpList" parameterType="map" resultType="map">
+        SELECT *
+        FROM TB_EMP_KJJ
+    </select>
+
+    <select id="deleteEmpList" parameterType="int" resultType="int">
+        SELECT *
+        FROM TB_EMP_KJJ
+    </select>
+
+    <select id="searchEmpDataWithParams" parameterType="map" resultType="list">
+        SELECT *
+        FROM TB_EMP_KJJ
+    </select>
+
+
+</mapper>
