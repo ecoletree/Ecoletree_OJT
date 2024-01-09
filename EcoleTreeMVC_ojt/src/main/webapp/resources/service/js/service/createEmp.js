@@ -9,30 +9,30 @@
 	function (et, ctrl) {
 		if (_.isObject(et) && et.name === ETCONST.PROJECT_NAME) {
 			if (!et.vc || et.vc.name !== 'createEmp') {
-				et.vc = ctrl(et)
+				et.vc = ctrl(et);
 			}
 			
 		}
 		else {
-			console.error('ecoletree OR ETCONST is not valid. please check that common.js file was imported.')
+			console.error('ecoletree OR ETCONST is not valid. please check that common.js file was imported.');
 		}
 	}(this.ecoletree, function (et) {
 		
-		'use strict'
+		'use strict';
 		
-		var ctrl = {}
+		var ctrl = {};
 		
-		ctrl.name = 'createEmp'
-		ctrl.path = '/sample'
+		ctrl.name = 'createEmp';
+		ctrl.path = '/sample';
 		
 		// ============================== 화면 컨트롤 ==============================
 		/**
 		 * init VIEW
 		 */
 		ctrl.init = function (initData) {
-			var self = et.vc
+			var self = et.vc;
 			
-			ctrl.regExp = {} // 정규식을 전역변수에 담는다.
+			self.initData = initData;
 			
 			// [수정사항]
 			// initData 가져와서 list 로 뿌려주기
@@ -42,13 +42,11 @@
 			ETService()
 				.setSuccessFunction(self.resultFunction)
 				// .setErrorFunction(self.errorFunction)
-				.callService(self.path + '/code', {})
+				.callService(self.path + '/code', {});
+			self.validation(); // 유효성 검사
 			
-			self.setRegExp()  // 정규식 등록
-			self.validation() // 유효성 검사
-			
-			$('#btnAdd').click(self.btnAddClickHandler) // '추가' 버튼 클릭 이벤트
-		}
+			$('#btnAdd').click(self.btnAddClickHandler); // '추가' 버튼 클릭 이벤트
+		};
 		
 		/**
 		 * 서버에서 정상적으로 응답한 경우, 해당 응답을 처리합니다.
@@ -56,53 +54,23 @@
 		 * @param {Object} response 서버 응답 (empData.properties 에서 가져온 데이터)
 		 * */
 		ctrl.resultFunction = function (response) {
-			var self = et.vc
+			var self = et.vc;
 			
-			let empList = null
+			let empList = null;
 			
 			if (response.message === 'success') {
-				empList = response.data
+				empList = response.data;
 				
 				et.makeSelectOption(empList, {
 					value: 'code_cd',
 					text : 'code_name'
-				}, '#selPosition', '전체')
+				}, '#selPosition', '전체');
 			}
 			// when error,
 			else {
 				// TBD
 			}
-		}
-		
-		/**
-		 * 유효성 검사를 위한 정규식을 담고 있는 메서드입니다. 전역 객체에 정규식을 담습니다.
-		 * */
-		ctrl.setRegExp = function () {
-			var self = et.vc
-			
-			// 숫자만 (사번)
-			self.regExp['numberOnlyReg'] = new RegExp(/^\d+$/)
-			// 핸드폰 번호
-			// 하이픈(-) 에 ? 를 붙여 010-1234-1234, 01012341234 모두 통과시킵니다.
-			self.regExp['phoneReg'] = new RegExp(/^\d{3}-?\d{4}-?\d{4}$/)
-			// 이메일 확인
-			self.regExp['emailReg'] = new RegExp(/^\w([-_.]?\w)*@\w([-_.]?\w)*\.[a-zA-Z]{2,3}$/i)
-			// 빈칸 확인
-			self.regExp['whiteSpaceReg'] = new RegExp(/\s/)
-			// 특수문자 확인
-			self.regExp['specialCharReg'] = new RegExp(/[!?@#$%^&*():;+-=~{}<>_[\]|\\"',./`₩]/)
-			// 하이픈(-) 제외 특수문자 확인
-			self.regExp['specialCharRegWithoutHyphen'] = new RegExp(/[!?@#$%^&*():;+=~{}<>_[\]|\\"',./`₩]/)
-			// 하이픈(-), 닷(.) 제외 특수문자 확인
-			self.regExp['specialCharRegWithoutHyphenAndDot'] = new RegExp(/[!?@#$%^&*():;+=~{}<>_[\]|\\"',/`₩]/)
-			// 영문이름
-			self.regExp['engOnlyReg'] = new RegExp(/^[a-zA-Z]*$/)
-			// 생년월일
-			// 1999.01.01, 1991.1.1, 1991-01-01, 1991-1-1
-			self.regExp['birthDateReg'] = new RegExp(/^\d{4}[.|-]\d{1,2}[.|-]\d{1,2}$/)
-			// 한글 + 영어 + 숫자
-			self.regExp['koreanReg'] = new RegExp(/^[ㄱ-ㅎ가-힣a-zA-Z]*$/)
-		}
+		};
 		// ============================== 동작 컨트롤 ==============================
 		
 		// ============================== 이벤트 리스너 ==============================
@@ -110,10 +78,10 @@
 		 * 추가 버튼을 클릭했을 시, form 을 제출하는 함수를 호출합니다.
 		 * */
 		ctrl.btnAddClickHandler = function () {
-			var self = et.vc
+			var self = et.vc;
 			
-			$('#addForm').submit()
-		}
+			$('#addForm').submit();
+		};
 		
 		// ============================== DataTables 생성, 이벤트들 ==============================
 		
@@ -124,23 +92,12 @@
 		 *
 		 * */
 		ctrl.validation = function () {
-			var self = et.vc
+			var self = et.vc;
 			
 			let addValidation
 				= new ETValidate('#addForm', self.path + '/create')
 				.setSubmitHandler(self.addSubmitHandler)
-				.setShowErrors(et.setErrorFunction())
-			
-			/*
-			 * 정규식을 사용한 커스텀 룰을 추가하다보니, 너무 장황하게 길어짐 && 중복발생 문제가 생깁니다.
-			 * 정규식으로 유효성 검사를 하는 것은 파일을 분리해서 관리해야 합니다. 굳이 가독성 떨어지는
-			 * 정규식을 로직단에서 확인 해야할 이유는 없기 때문입니다.
-			 * 하지만 common 으로 관리되는 공통 파일을 손댈 수 없어 이렇게 둡니다.
-			 *
-			 * 또한 실수로 특수문자가 입력된 경우
-			 * (1) request 를 제한하고 정규식으로 아예 입력 자체를 막을지,
-			 * (2) request 를 허용하고 특수문자 자체를 replace 시킬 지
-			 * */
+				.setShowErrors(et.setErrorFunction());
 			
 			/*
 			 * (ex) ETValidate 객체에 메서드를 추가하는 예시
@@ -153,103 +110,103 @@
 			
 			// 커스텀 룰 - 숫자만 (사번)
 			ETValidate.addMethod('numberOnlyReg', function (value, element, params) {
-				const parsed = value.toString().trim()
-				return self.regExp.numberOnlyReg.test(parsed)
-			})
+				const parsed = value.toString().trim();
+				return et.common.REG_EXP.NUMBER_ONLY_NOT_REQUIRED.test(parsed);
+			});
 			// 커스텀 룰 - 핸드폰 형식 체크
 			ETValidate.addMethod('phoneReg', function (value, element, param) {
 				const parsed = value.toString()
 					.trim()
-					.replace(self.regExp.whiteSpaceReg, '')
-					.replace(self.regExp.specialCharRegWithoutHyphen, '')
-				return self.regExp.phoneReg.test(parsed)
-			})
+					.replace(et.common.REG_EXP.WHITE_SPACE, '')
+					.replace(et.common.REG_EXP.SPECIAL_CHAR_WO_HYPHEN, '');
+				return et.common.REG_EXP.PHONE_NUMBER.test(parsed);
+			});
 			// 커스텀 룰 - 이메일 형식 체크
 			ETValidate.addMethod('emailReg', function (value, element, params) {
-				const parsed = value.toString().trim()
-				return self.regExp.emailReg.test(parsed)
-			})
+				const parsed = value.toString().trim();
+				return et.common.REG_EXP.EMAIL_ADDRESS.test(parsed);
+			});
 			// 커스텀 룰 - 생년월일 체크
 			ETValidate.addMethod('birthDateReg', function (value, element, params) {
 				const parsed = value.toString()
 					.trim()
-					.replace(self.regExp.whiteSpaceReg, '')
-					.replace(self.regExp.specialCharRegWithoutHyphenAndDot, '')
-				return self.regExp.birthDateReg.test(parsed)
-			})
+					.replace(et.common.REG_EXP.WHITE_SPACE, '')
+					.replace(et.common.REG_EXP.SPECIAL_CHAR_WO_HYPHEN_AND_DOT, '');
+				return et.common.REG_EXP.BIRTH_DATE.test(parsed);
+			});
 			// 커스텀 룰 - 영문이름 체크
 			ETValidate.addMethod('engOnlyReg', function (value, element, params) {
 				const parsed = value.toString()
 					.trim()
-					.replace(self.regExp.whiteSpaceReg, '')
-					.replace(self.regExp.specialCharReg, '')
+					.replace(et.common.REG_EXP.WHITE_SPACE, '')
+					.replace(et.common.REG_EXP.SPECIAL_CHAR, '');
 				debugger
-				return value.toString() !== '' ? self.regExp.engOnlyReg.test(parsed) : true
-			})
+				return value.toString() !== '' ? et.common.REG_EXP.ENG_ONLY_NOT_REQUIRED.test(parsed) : true;
+			});
 			
 			// (1) emp_name
 			addValidation.validateRules(
 				'emp_name',
 				addValidation.REQUIRED,
 				'이름은 필수값 입니다.'
-			)
+			);
 			// (2) department
 			addValidation.validateRules(
 				'department',
 				addValidation.REQUIRED,
 				'부서는 필수값 입니다.'
-			)
+			);
 			// (3) position
 			addValidation.validateRules(
 				'position',
 				addValidation.REQUIRED,
 				'직위는 필수값 입니다.'
-			)
+			);
 			
 			// (4) email
 			addValidation.validateRules(
 				'email_1',
 				addValidation.REQUIRED,
 				'(abcd@nate.com) 메일은 필수값 입니다.'
-			)
+			);
 			// (5) phone_num
 			addValidation.validateRules(
 				'phone_num',
 				'phoneReg',
 				'(010-1234-1234) 전화번호 형식이 맞지 않습니다.'
-			)
+			);
 			// (6) emp_num
 			addValidation.validateRules(
 				'emp_num',
 				'numberOnlyReg',
 				'(숫자) 사번은 필수값 입니다.'
-			)
+			);
 			// (7) emp_engname
 			addValidation.validateRules(
 				'emp_engname',
 				'engOnlyReg',
 				'(영문) 영문만 입력해주세요'
-			)
+			);
 			
-			addValidation.apply()
-		}
+			addValidation.apply();
+		};
 		
 		/**
 		 * 유효성 검사를 통과한 form 데이터를 submit 합니다.
 		 *
 		 * */
 		ctrl.addSubmitHandler = function () {
-			var self = et.vc
+			var self = et.vc;
 			
-			let form = $('#addForm')
+			let form = $('#addForm');
 			// form 데이터 직렬화
-			let formData = ETValidate.convertFormToObject(form, true, true)
-			console.log('[/sample/create] formData 확인', formData)
+			let formData = ETValidate.convertFormToObject(form, true, true);
+			console.log('[/sample/create] formData 확인', formData);
 			
 			// new ETService()
 			//     .setSuccessFunction(self.addSuccessHandler)
 			//     .callService(self.path + "/create", formData);
-		}
+		};
 		
 		/**
 		 * form 제출 후, 서버에서 전송한 응답을 처리합니다.
@@ -257,15 +214,15 @@
 		 * @param {Object} response 서버 응답
 		 * */
 		ctrl.addSuccessHandler = function (response) {
-			var self = et.vc
+			var self = et.vc;
 			
 			// success 일 시, callView 호출해서 화면에 뿌려주기
 			
-		}
+		};
 		
-		return ctrl
+		return ctrl;
 	})
-)
+);
 
 
 
