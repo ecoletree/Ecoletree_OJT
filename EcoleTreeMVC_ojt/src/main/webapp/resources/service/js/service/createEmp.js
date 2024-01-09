@@ -23,7 +23,7 @@
 		var ctrl = {};
 		
 		ctrl.name = 'createEmp';
-		ctrl.path = '/sample';
+		ctrl.path = '';
 		
 		// ============================== 화면 컨트롤 ==============================
 		/**
@@ -39,38 +39,32 @@
 			// ETService() 사용한 api 콜 줄이기
 			
 			// 직원 데이터 호출
-			ETService()
-				.setSuccessFunction(self.resultFunction)
-				// .setErrorFunction(self.errorFunction)
-				.callService(self.path + '/code', {});
+			// ETService()
+			// 	.setSuccessFunction(self.resultFunction)
+			// 	// .setErrorFunction(self.errorFunction)
+			// 	.callService(self.path + '/code', {});
 			self.validation(); // 유효성 검사
 			
 			$('#btnAdd').click(self.btnAddClickHandler); // '추가' 버튼 클릭 이벤트
 		};
 		
 		/**
-		 * 서버에서 정상적으로 응답한 경우, 해당 응답을 처리합니다.
-		 *
-		 * @param {Object} response 서버 응답 (empData.properties 에서 가져온 데이터)
+		 * 처음 화면 진입 시, select 태그에 직급 데이터를 집어넣습니다.
 		 * */
-		ctrl.resultFunction = function (response) {
+		ctrl.setSelectView = function () {
 			var self = et.vc;
 			
-			let empList = null;
-			
-			if (response.message === 'success') {
-				empList = response.data;
-				
-				et.makeSelectOption(empList, {
+			et.makeSelectOption(
+				self.initData.codeList,
+				{
 					value: 'code_cd',
 					text : 'code_name'
-				}, '#selPosition', '전체');
-			}
-			// when error,
-			else {
-				// TBD
-			}
+				},
+				'#selPosition',
+				'전체'
+			);
 		};
+		
 		// ============================== 동작 컨트롤 ==============================
 		
 		// ============================== 이벤트 리스너 ==============================
@@ -98,6 +92,8 @@
 				= new ETValidate('#addForm', self.path + '/create')
 				.setSubmitHandler(self.addSubmitHandler)
 				.setShowErrors(et.setErrorFunction());
+			
+			self.setSelectView();
 			
 			/*
 			 * (ex) ETValidate 객체에 메서드를 추가하는 예시
@@ -140,7 +136,6 @@
 					.trim()
 					.replace(et.common.REG_EXP.WHITE_SPACE, '')
 					.replace(et.common.REG_EXP.SPECIAL_CHAR, '');
-				debugger
 				return value.toString() !== '' ? et.common.REG_EXP.ENG_ONLY_NOT_REQUIRED.test(parsed) : true;
 			});
 			
@@ -199,13 +194,12 @@
 			var self = et.vc;
 			
 			let form = $('#addForm');
-			// form 데이터 직렬화
 			let formData = ETValidate.convertFormToObject(form, true, true);
 			console.log('[/sample/create] formData 확인', formData);
 			
-			// new ETService()
-			//     .setSuccessFunction(self.addSuccessHandler)
-			//     .callService(self.path + "/create", formData);
+			ETService()
+				.setSuccessFunction(self.addSuccessHandler)
+				.callService(self.path + '/createEmp', formData);
 		};
 		
 		/**
@@ -217,6 +211,7 @@
 			var self = et.vc;
 			
 			// success 일 시, callView 호출해서 화면에 뿌려주기
+			consoel.log(response);
 			
 		};
 		

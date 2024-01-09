@@ -11,7 +11,6 @@
 			if (!et.vc || et.vc.name !== 'empList') {
 				et.vc = ctrl(et);
 			}
-			
 		}
 		else {
 			console.error('ecoletree OR ETCONST is not valid. please check that common.js file was imported.');
@@ -31,17 +30,34 @@
 		 */
 		ctrl.init = function (initData) {
 			var self = et.vc;
-			
-			self.initData = initData;
+			self.initData = initData; // 콘솔로그 확인 O
 			
 			// ETService()
 			// 	.setSuccessFunction(self.resultFunction)
-			// 	.callService(self.path + '/getEmpList', {});
+			// 	.callService(self.path + '/list', {});
 			
+			self.setSelectView();
 			self.eventHandlers();
 			
 			et.setDataTableRowSelection('#tbList', self.rowSelectionHandler);
 		};
+		
+		/**
+		 * 처음 화면 진입 시, select 태그에 직급 데이터를 집어넣습니다.
+		 * */
+		ctrl.setSelectView = function () {
+			var self = et.vc;
+			
+			et.makeSelectOption(
+				self.initData.codeList,
+				{
+					value: 'code_cd',
+					text : 'code_name'
+				},
+				'#selPosition',
+				'전체'
+			);
+		}
 		
 		/**
 		 * 테이블에서 '행'을 선택했을 때 발생하는 이벤트입니다.
@@ -65,28 +81,30 @@
 		 *
 		 * @param {Object} response 서버 응답 결과
 		 * */
-		ctrl.resultFunction = function (response) {
-			var self = et.vc;
-			
-			/*
-			 * 메모:
-			 * 여기서 this 는 해당 함수를 호출한 주체인 ETService 객체에 바인딩 된다.
-			 * */
-			
-			let empList = null;
-			if (response.message === 'success') {
-				empList = response.data;
-				
-				et.makeSelectOption(empList, {
-					value: 'code_cd',
-					text : 'code_name'
-				}, '#selPosition', '전체');
-			}
-			// when error,
-			else {
-				// TBD
-			}
-		};
+		// ctrl.resultFunction = function (response) {
+		// 	var self = et.vc;
+		//	
+		// 	console.log('response', response);
+		//	
+		// 	/*
+		// 	 * 메모:
+		// 	 * 여기서 this 는 해당 함수를 호출한 주체인 ETService 객체에 바인딩 된다.
+		// 	 * */
+		//	
+		// 	let empList = null;
+		// 	if (response.message === 'success') {
+		// 		empList = response.data;
+		//		
+		// 		et.makeSelectOption(empList, {
+		// 			value: 'code_cd',
+		// 			text : 'code_name'
+		// 		}, '#selPosition', '전체');
+		// 	}
+		// 	// when error,
+		// 	else {
+		// 		// TBD
+		// 	}
+		// };
 		
 		/**
 		 * 클릭 이벤트를 담당하는 이벤트 핸들러 모음

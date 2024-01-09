@@ -17,6 +17,8 @@ public interface EmpMgtService {
 	
 	Map<String, Object> createEmp(Map<String, Object> params);
 	
+	List<Map<String, Object>> getPositionList();
+	
 	Map<String, Object> selectEmpList();
 	
 	Map<String, Object> updateEmpList();

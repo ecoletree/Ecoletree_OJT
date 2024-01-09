@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.List;
@@ -39,8 +40,6 @@ public class EmpMgtServiceImpl extends ETBaseService implements EmpMgtService {
 		map.put("recordFiltered", count);
 		map.put("data", list);
 		
-		System.out.println("[service] " + map);
-		
 		return map;
 	}
 	
@@ -51,6 +50,11 @@ public class EmpMgtServiceImpl extends ETBaseService implements EmpMgtService {
 		
 		
 		return map;
+	}
+	
+	@Override
+	public List<Map<String, Object>> getPositionList() {
+		return mapper.selectPositions();
 	}
 	
 	@Override

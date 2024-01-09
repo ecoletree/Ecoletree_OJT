@@ -21,6 +21,8 @@ public interface EmpMgtMapper {
 	
 	Integer selectEmpListCnt(Map<String, Object> params);
 	
+	List<Map<String, Object>> selectPositions();
+	
 	Map<String, Object> updateEmpList(Map<String, Object> params);
 	
 	Integer deleteEmpList(Integer empNo);
