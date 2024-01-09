@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <!-- Smart Admin Core JS -->
 <script src="${cp }/resources/smartadmin/js/vendors.bundle.js"></script>
@@ -85,17 +85,21 @@
 <!-- Excel Download -->
 <script src="${cp }/resources/ecoletree/js/plugin/sheetjs-master/xlsx.full.min.js"></script>
 
+<!-- Plugin JS : common.js -->
+<script src="${cp }/resources/service/js/common/common.js"></script>
+
+
 <script type="text/javascript">
 
 	/**
 	 * 컨텍스트 패스 획득
 	 */
-	function getContextPath() {
+	function getContextPath () {
 		var cp = '${cp}';
 		if (cp == "" || cp == '') {
 			cp = "/";
 		}
 		return '${cp}';
 	};
-	
+
 </script>
